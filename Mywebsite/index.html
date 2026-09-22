@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nur.Prof.AI — ИИ-профориентация для школьников</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F3F6F0;
+    --bg-soft: #EAEFE4;
+    --surface: #FFFFFF;
+    --border: #DFE5D6;
+    --ink: #1C2B22;
+    --ink-soft: #52604F;
+    --violet: #3358D6;
+    --violet-dark: #24409E;
+    --violet-bg: #E7EDFB;
+    --amber: #E8A33D;
+    --amber-bg: #FCF0DC;
+    --rose: #C24D5C;
+    --rose-bg: #FAE6E8;
+    --green: #2F7A5B;
+    --green-bg: #E1F0E6;
+    --radius-s: 10px;
+    --radius-m: 16px;
+    --radius-l: 26px;
+    --max: 700px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+
+  .bg-anim{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .bg-anim span{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.35;
+  }
+  .bg-anim span:nth-child(1){
+    width:480px;height:480px;
+    background:var(--violet-bg);
+    top:-160px;left:-120px;
+    animation:float1 26s ease-in-out infinite;
+  }
+  .bg-anim span:nth-child(2){
+    width:420px;height:420px;
+    background:var(--amber-bg);
+    bottom:-140px;right:-100px;
+    animation:float2 30s ease-in-out infinite;
+  }
+  .bg-anim span:nth-child(3){
+    width:360px;height:360px;
+    background:var(--green-bg);
+    top:35%;right:10%;
+    animation:float3 34s ease-in-out infinite;
+  }
+  @keyframes float1{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(60px,80px) scale(1.12);}
+  }
+  @keyframes float2{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-70px,-50px) scale(1.15);}
+  }
+  @keyframes float3{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-40px,60px) scale(0.9);}
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    color:var(--ink);
+    line-height:1.15;
+    margin:0;
+  }
+  p{margin:0;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select{font-family:inherit;}
+  a{color:var(--violet);}
+
+  #app{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:28px 20px 90px;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:22px 20px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    position:relative;
+  }
+  .topbar-left{display:flex;align-items:center;gap:10px;}
+  .logo{
+    width:34px;height:34px;border-radius:9px;
+    background:var(--violet);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .logo svg{width:18px;height:18px;}
+  .logo-text{font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:-0.01em;}
+
+  .lang-switch{position:relative;}
+  .lang-btn{
+    display:flex;align-items:center;gap:7px;
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    border-radius:100px;
+    padding:8px 13px;
+    font-size:14px;font-weight:600;
+    color:var(--ink);
+  }
+  .lang-btn:hover{border-color:var(--violet);}
+  .lang-menu{
+    position:absolute;
+    top:calc(100% + 8px);
+    right:0;
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-m);
+    box-shadow:0 10px 30px rgba(28,43,34,.12);
+    padding:6px;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    min-width:150px;
+    z-index:20;
+  }
+  .lang-opt{
+    display:flex;align-items:center;gap:9px;
+    padding:10px 12px;
+    border-radius:var(--radius-s);
+    font-size:14.5px;font-weight:600;
+    color:var(--ink);
+    text-align:left;
+    background:transparent;
+  }
+  .lang-opt:hover{background:var(--bg-soft);}
+  .lang-opt.active{background:var(--violet-bg);color:var(--violet-dark);}
+  .lang-opt .flag{font-size:17px;margin-right:0;}
+
+  /* ---------- progress path ---------- */
+  .path-wrap{margin:34px 0 40px;}
+  .path{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    position:relative;
+  }
+  .path::before{
+    content:"";
+    position:absolute;
+    top:9px;left:9px;right:9px;
+    height:2px;
+    background:var(--border);
+    z-index:0;
+  }
+  .path-fill{
+    position:absolute;
+    top:9px;left:9px;
+    height:2px;
+    background:var(--amber);
+    z-index:1;
+    transition:width .5s ease;
+  }
+  .node{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;
+    width:20px;
+    flex:1;
+  }
+  .node-dot{
+    width:20px;height:20px;border-radius:50%;
+    background:var(--surface);
+    border:2px solid var(--border);
+    transition:.3s;
+  }
+  .node.done .node-dot{background:var(--amber);border-color:var(--amber);}
+  .node.active .node-dot{background:var(--violet);border-color:var(--violet);box-shadow:0 0 0 5px var(--violet-bg);}
+  .node-label{
+    margin-top:9px;font-size:11.5px;color:var(--ink-soft);
+    text-align:center;max-width:72px;line-height:1.25;
+  }
+  .node.active .node-label{color:var(--violet);font-weight:600;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:8px 0 6px;}
+  .kicker{
+    color:var(--violet);
+    font-weight:600;
+    font-size:14.5px;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:40px;
+    letter-spacing:-0.015em;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--violet);
+  }
+  .hero-sub{
+    margin-top:16px;
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:52ch;
+  }
+  .hero-steps{
+    margin-top:34px;
+    display:grid;
+    gap:10px;
+  }
+  .hero-step{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:14px 16px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-m);
+  }
+  .hero-step-num{
+    font-family:'Space Grotesk';font-weight:600;
+    color:var(--amber);
+    font-size:15px;
+    flex-shrink:0;
+    width:22px;
+  }
+  .hero-step-text b{display:block;font-size:15px;margin-bottom:2px;}
+  .hero-step-text span{font-size:14px;color:var(--ink-soft);}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 24px;
+    border-radius:100px;
+    border:none;
+    font-weight:600;
+    font-size:15.5px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:focus-visible{outline:3px solid var(--violet-dark); outline-offset:2px;}
+  .btn-primary{background:var(--violet);color:#fff;}
+  .btn-primary:hover{box-shadow:0 6px 18px rgba(51,88,214,.28);}
+  .btn-primary:disabled{background:#C7C2E6;cursor:not-allowed;box-shadow:none;}
+  .btn-ghost{background:transparent;color:var(--violet);border:1.5px solid var(--violet);}
+  .btn-ghost:hover{background:var(--violet-bg);}
+  .btn-block{width:100%;justify-content:center;}
+  .btn-row{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;}
+
+  /* ---------- card / form ---------- */
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-l);
+    padding:28px 26px;
+  }
+  .step-title{font-size:24px;margin-bottom:6px;}
+  .step-hint{color:var(--ink-soft);font-size:14.5px;margin-bottom:26px;}
+
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block;font-weight:600;font-size:14.5px;margin-bottom:7px;
+  }
+  .field .opt{font-weight:400;color:var(--ink-soft);font-size:13px;}
+  .field input, .field select{
+    width:100%;
+    padding:12px 14px;
+    border-radius:var(--radius-s);
+    border:1.5px solid var(--border);
+    background:var(--bg-soft);
+    font-size:15px;
+    color:var(--ink);
+  }
+  .field input:focus, .field select:focus{
+    outline:none;border-color:var(--violet);background:#fff;
+  }
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media (max-width:520px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .fieldset-title{
+    font-weight:600;font-size:14.5px;margin:26px 0 4px;
+    padding-top:18px;border-top:1px solid var(--border);
+  }
+  .fieldset-hint{color:var(--ink-soft);font-size:13px;margin-bottom:14px;}
+
+  /* ---------- klimov ---------- */
+  .q-counter{color:var(--ink-soft);font-size:13.5px;margin-bottom:10px;}
+  .q-lead{font-size:15px;color:var(--ink-soft);margin-bottom:18px;}
+  .pair{display:grid;gap:12px;}
+  .opt-card{
+    text-align:left;
+    background:var(--bg-soft);
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-m);
+    padding:18px 18px;
+    font-size:15.5px;
+    line-height:1.45;
+    color:var(--ink);
+    transition:.15s;
+  }
+  .opt-card:hover{border-color:var(--violet);background:var(--violet-bg);}
+  .opt-card:focus-visible{outline:3px solid var(--violet-dark);}
+
+  /* ---------- riasec ---------- */
+  .riasec-item{
+    padding:18px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .riasec-item:last-child{border-bottom:none;}
+  .riasec-text{font-size:15.5px;margin-bottom:12px;}
+  .scale{display:flex;gap:6px;}
+  .scale button{
+    flex:1;
+    padding:10px 4px;
+    border-radius:var(--radius-s);
+    border:1.5px solid var(--border);
+    background:var(--bg-soft);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  .scale button.picked{background:var(--violet);border-color:var(--violet);color:#fff;}
+  .scale-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:11.5px;color:var(--ink-soft);}
+
+  /* ---------- tags ---------- */
+  .tag-grid{display:flex;flex-wrap:wrap;gap:10px;}
+  .tag{
+    padding:11px 16px;
+    border-radius:100px;
+    border:1.5px solid var(--border);
+    background:var(--bg-soft);
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink-soft);
+  }
+  .tag.picked{background:var(--amber);border-color:var(--amber);color:#2B2100;}
+
+  /* ---------- loading ---------- */
+  .loading-wrap{text-align:center;padding:70px 10px;}
+  .spinner{
+    width:52px;height:52px;margin:0 auto 26px;
+    border-radius:50%;
+    border:4px solid var(--border);
+    border-top-color:var(--violet);
+    animation:spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loading-msg{font-size:16px;color:var(--ink-soft);min-height:24px;}
+
+  /* ---------- results ---------- */
+  .result-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-m);
+    padding:20px 20px;
+    margin-bottom:14px;
+  }
+  .result-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .result-name{font-family:'Space Grotesk';font-weight:600;font-size:18px;}
+  .result-field{color:var(--ink-soft);font-size:13.5px;margin-top:3px;}
+  .match-badge{
+    flex-shrink:0;
+    background:var(--green-bg);color:var(--green);
+    font-weight:700;font-size:13px;
+    padding:6px 11px;border-radius:100px;
+  }
+  .result-desc{font-size:14.5px;color:var(--ink-soft);margin-top:12px;}
+  .result-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;}
+  .mini-tag{
+    font-size:12px;font-weight:600;color:var(--violet);
+    background:var(--violet-bg);padding:4px 10px;border-radius:100px;
+  }
+  .result-actions{margin-top:16px;}
+
+  /* ---------- universities ---------- */
+  .chosen-banner{
+    background:var(--violet);
+    color:#fff;
+    border-radius:var(--radius-l);
+    padding:26px 24px;
+    margin-bottom:26px;
+  }
+  .chosen-banner .k{font-size:13px;opacity:.75;font-weight:600;}
+  .chosen-banner h2{color:#fff;font-size:25px;margin-top:6px;}
+  .chosen-banner p{margin-top:10px;font-size:14.5px;opacity:.9;}
+
+  .uni-group-title{
+    font-size:13.5px;font-weight:700;color:var(--ink-soft);
+    margin:26px 0 12px;
+  }
+  .uni-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-m);
+    padding:18px 18px;
+    margin-bottom:12px;
+  }
+  .uni-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+  .uni-name{font-weight:700;font-size:15.5px;}
+  .uni-country{font-size:12.5px;color:var(--ink-soft);margin-top:3px;}
+  .flag{font-size:15px;margin-right:4px;}
+  .req-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;}
+  .req-chip{
+    font-size:12.5px;font-weight:600;
+    padding:6px 10px;border-radius:8px;
+    display:flex;align-items:center;gap:5px;
+  }
+  .req-ok{background:var(--green-bg);color:var(--green);}
+  .req-warn{background:var(--amber-bg);color:#8A5F00;}
+  .req-low{background:var(--rose-bg);color:var(--rose);}
+  .req-na{background:var(--bg-soft);color:var(--ink-soft);}
+  .uni-price{
+    margin-top:11px;font-size:13px;font-weight:600;
+    color:var(--violet-dark);
+  }
+  .uni-link{
+    display:inline-flex;align-items:center;gap:5px;
+    margin-top:12px;
+    font-size:13.5px;font-weight:700;
+    color:var(--violet);
+    text-decoration:none;
+  }
+  .uni-link:hover{text-decoration:underline;}
+
+  .info-banner{
+    background:var(--amber-bg);
+    border-radius:var(--radius-m);
+    padding:16px 18px;
+    font-size:14.5px;
+    color:#5C4300;
+    line-height:1.5;
+    margin:20px 0;
+  }
+
+  .footnote{
+    margin-top:30px;font-size:13px;color:var(--ink-soft);
+    background:var(--bg-soft);padding:14px 16px;border-radius:var(--radius-m);
+    line-height:1.5;
+  }
+
+  .back-link{
+    background:none;border:none;color:var(--ink-soft);
+    font-size:14px;font-weight:600;padding:0;margin-bottom:18px;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .back-link:hover{color:var(--violet);}
+</style>
+</head>
+<body>
+
+<div class="bg-anim"><span></span><span></span><span></span></div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.6"/><path d="M15 9L13 13L9 15L11 11L15 9Z" fill="white"/></svg>
+    </div>
+    <span class="logo-text">Nur.Prof.AI</span>
+  </div>
+  <div class="lang-switch" id="lang-switch">
+    <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)"></button>
+  </div>
+</div>
+
+<div id="app"></div>
+
+<script>
+/* ============ I18N ============ */
+
+const LANG_META = {
+  ru: {flag:"🇷🇺", label:"Рус"},
+  en: {flag:"🇺🇸", label:"Eng"},
+  kz: {flag:"🇰🇿", label:"Қаз"},
+};
+
+const UI = {
+  kicker:{ru:"ИИ-профориентация · демо", en:"AI career guidance · demo", kz:"ЖИ-кәсіптік бағдар · демо"},
+  heroTitleHtml:{
+    ru:'Найди профессию,<br>которая тебе <em>правда</em> подходит',
+    en:'Find a career<br>that <em>truly</em> fits you',
+    kz:'Саған <em>шынымен</em><br>сай келетін мамандықты тап',
+  },
+  heroSub:{
+    ru:"Пройди тест Климова, тест интересов и небольшую анкету — а дальше ИИ подберёт профессии под твой склад ума и поможет найти университеты, где им учат.",
+    en:"Take the Klimov test, an interests test and a short questionnaire — then AI will match professions to your mindset and help you find universities that teach them.",
+    kz:"Климов тестін, қызығушылық тестін және қысқаша сауалнаманы өт — содан кейін ЖИ саған сай мамандықтарды таңдап, солар оқытылатын университеттерді табуға көмектеседі.",
+  },
+  step1Title:{ru:"Анкета", en:"Questionnaire", kz:"Сауалнама"},
+  step1Desc:{ru:"Возраст, страна, куда планируешь поступать, текущие баллы", en:"Age, country, where you plan to apply, current scores", kz:"Жасың, ел, қайда түсуді жоспарлап отырғаның, қазіргі баллдарың"},
+  step2Title:{ru:"Тест Климова", en:"Klimov test", kz:"Климов тесті"},
+  step2Desc:{ru:"Классический тест на профессиональную направленность", en:"A classic test of professional orientation", kz:"Кәсіби бағыттылыққа арналған классикалық тест"},
+  step3Title:{ru:"Тест интересов", en:"Interests test", kz:"Қызығушылық тесті"},
+  step3Desc:{ru:"Короткий опрос по методике RIASEC + твои интересы", en:"A short RIASEC-based survey + your interests", kz:"RIASEC әдістемесі бойынша қысқа сауалнама + қызығушылықтарың"},
+  step4Title:{ru:"ИИ-анализ и вузы", en:"AI analysis & universities", kz:"ЖИ-талдау және ЖОО"},
+  step4Desc:{ru:"Подборка профессий и подходящих университетов под твои баллы", en:"A selection of professions and universities that fit your scores", kz:"Баллдарыңа сай мамандықтар мен университеттер тізімі"},
+  heroBtn:{ru:"Начать тестирование →", en:"Start the test →", kz:"Тестілеуді бастау →"},
+
+  onbTitle:{ru:"Немного о тебе", en:"A bit about you", kz:"Сен туралы аздап"},
+  onbHint:{ru:"Это поможет точнее подобрать вузы в конце. Баллы указывать не обязательно.", en:"This helps pick universities more precisely at the end. Scores are optional.", kz:"Бұл соңында ЖОО-ны дәлірек таңдауға көмектеседі. Баллдарды көрсету міндетті емес."},
+  ageLabel:{ru:"Сколько тебе лет?", en:"How old are you?", kz:"Саған неше жас?"},
+  agePlaceholder:{ru:"Например, 16", en:"e.g. 16", kz:"Мысалы, 16"},
+  homeLabel:{ru:"Страна проживания", en:"Country of residence", kz:"Тұратын елің"},
+  targetLabel:{ru:"Куда планируешь поступать?", en:"Where do you plan to apply?", kz:"Қайда түсуді жоспарлап отырсың?"},
+  countryUndecided:{ru:"Ещё не решил(а)", en:"Not decided yet", kz:"Әлі шешкен жоқпын"},
+  scoresTitle:{ru:"Текущие баллы", en:"Current scores", kz:"Қазіргі баллдар"},
+  scoresOpt:{ru:"(если уже сдавал(а) — необязательно)", en:"(if you've already taken them — optional)", kz:"(тапсырған болсаң — міндетті емес)"},
+  scoresHint:{ru:"Заполни то, что есть — остальное можно пропустить.", en:"Fill in what you have — skip the rest.", kz:"Бар мәліметті толтыр — қалғанын өткізіп жіберуге болады."},
+  entLabel:{ru:"ЕНТ", en:"ENT", kz:"ҰБТ"}, entOpt:{ru:"из 140", en:"out of 140", kz:"140-тен"},
+  ieltsLabel:{ru:"IELTS", en:"IELTS", kz:"IELTS"}, ieltsOpt:{ru:"из 9", en:"out of 9", kz:"9-дан"},
+  satLabel:{ru:"SAT", en:"SAT", kz:"SAT"}, satOpt:{ru:"из 1600", en:"out of 1600", kz:"1600-ден"},
+  onbBtn:{ru:"Дальше — тест Климова →", en:"Next — Klimov test →", kz:"Келесі — Климов тесті →"},
+
+  klimovCounterOf:{ru:"Вопрос {i} из {n} · Тест Климова", en:"Question {i} of {n} · Klimov test", kz:"{i}/{n} сұрақ · Климов тесті"},
+  klimovHint:{ru:"Выбери вариант, который ближе всего тебе по духу.", en:"Choose the option that feels closest to you.", kz:"Өзіңе жақынырақ нұсқаны таңда."},
+  klimovBack:{ru:"← Назад, я ошибся(лась)", en:"← Back, I made a mistake", kz:"← Артқа, мен қателестім"},
+
+  riasecTitle:{ru:"Насколько это про тебя?", en:"How much is this about you?", kz:"Бұл сен туралы қаншалықты?"},
+  riasecHint:{ru:"Короткий тест по методике RIASEC. Отметь для каждой фразы — от «совсем не про меня» до «точно про меня».", en:"A short RIASEC-based test. Rate each statement from “not at all like me” to “totally me”.", kz:"RIASEC әдістемесі бойынша қысқа тест. Әр сөйлемді «мүлде маған қатысты емес»-тен «дәл мен туралы»-ға дейін бағала."},
+  scaleLow:{ru:"совсем не про меня", en:"not at all like me", kz:"мүлде маған қатысты емес"},
+  scaleHigh:{ru:"точно про меня", en:"totally me", kz:"дәл мен туралы"},
+  riasecAnswered:{ru:"Отвечено {a} из {n}", en:"Answered {a} of {n}", kz:"{a}/{n} жауап берілді"},
+  riasecNext:{ru:"Дальше — интересы →", en:"Next — interests →", kz:"Келесі — қызығушылықтар →"},
+
+  interestsTitle:{ru:"Что тебе интересно?", en:"What interests you?", kz:"Саған не қызық?"},
+  interestsHint:{ru:"Выбери минимум 3 направления — можно больше.", en:"Pick at least 3 areas — more is fine.", kz:"Кемінде 3 бағыт таңда — көбірек те болады."},
+  pickMore:{ru:"Выбери ещё {n}", en:"Pick {n} more", kz:"Тағы {n} таңда"},
+  nextArrow:{ru:"Дальше →", en:"Next →", kz:"Келесі →"},
+
+  habitsTitle:{ru:"Где ты обычно проводишь время?", en:"Where do you usually spend your time?", kz:"Уақытыңды әдетте қайда өткізесің?"},
+  habitsHint:{ru:"Выбери минимум 2 варианта — это поможет ИИ позже составить план подготовки в формате, который тебе реально удобен.", en:"Pick at least 2 options — this helps AI later build a prep plan in a format that's actually convenient for you.", kz:"Кемінде 2 нұсқа таңда — бұл ЖИ-ге кейін саған нақты ыңғайлы форматта дайындық жоспарын құруға көмектеседі."},
+  hoursLabel:{ru:"Сколько часов в день готов(а) уделять подготовке?", en:"How many hours a day are you ready to spend on prep?", kz:"Дайындыққа күніне қанша сағат бөлуге дайынсың?"},
+  hoursOpt:{ru:"(необязательно)", en:"(optional)", kz:"(міндетті емес)"},
+  hoursPlaceholder:{ru:"Например, 1.5", en:"e.g. 1.5", kz:"Мысалы, 1.5"},
+  habitsBtnNext:{ru:"Готово — запустить ИИ-анализ →", en:"Done — run AI analysis →", kz:"Дайын — ЖИ-талдауды бастау →"},
+
+  resultsTitle:{ru:"Похоже, тебе подойдёт одно из этого", en:"Looks like one of these could suit you", kz:"Саған мыналардың бірі сай келуі мүмкін"},
+  resultsHint:{ru:"Подборка на основе теста Климова, RIASEC и твоих интересов. Попробуй профессию на практике или сразу переходи к вузам.", en:"A selection based on the Klimov test, RIASEC and your interests. Try a profession hands-on, or jump straight to universities.", kz:"Климов тесті, RIASEC және қызығушылықтарың негізіндегі таңдау. Мамандықты іс жүзінде сынап көр немесе бірден ЖОО-ларға өт."},
+  matchSuffix:{ru:"% совпадение", en:"% match", kz:"% сәйкестік"},
+  resultsTrialBtn:{ru:"🎯 Попробовать профессию", en:"🎯 Try the profession", kz:"🎯 Мамандықты сынап көру"},
+  resultsChooseBtn:{ru:"Выбрать эту профессию →", en:"Choose this profession →", kz:"Осы мамандықты таңдау →"},
+  resultsFootnote:{ru:"Это демо-версия: профессии подбираются по упрощённой модели прямо в браузере, без реального ИИ-сервиса. В полной версии здесь будет более глубокий анализ на базе языковой модели.", en:"This is a demo: professions are matched by a simplified model right in the browser, without a real AI service. The full version will use deeper analysis powered by a language model.", kz:"Бұл демо-нұсқа: мамандықтар браузердің өзінде жеңілдетілген модель бойынша таңдалады, нақты ЖИ қызметінсіз. Толық нұсқада тілдік модель негізіндегі тереңірек талдау болады."},
+
+  trialBack:{ru:"← Назад к профессиям", en:"← Back to professions", kz:"← Мамандықтарға оралу"},
+  trialCounter:{ru:"Проба профессии · Вопрос {i} из {n}", en:"Profession trial · Question {i} of {n}", kz:"Мамандықты сынау · {i}/{n} сұрақ"},
+  trialResultCounter:{ru:"Проба профессии · {name}", en:"Profession trial · {name}", kz:"Мамандықты сынау · {name}"},
+  trialCorrectTitle:{ru:"Верно {c} из {n}", en:"{c} of {n} correct", kz:"{n}-нің {c}-і дұрыс"},
+  trialHintAll:{ru:"Отлично — ты рассуждаешь так же, как рассуждают в этой профессии каждый день.", en:"Great — you're thinking the way people in this profession do every day.", kz:"Керемет — сен осы мамандық иелері күн сайын ойлайтындай ойладың."},
+  trialHintPartial:{ru:"Часть вопросов оказалась непростой — это нормально, в реальной работе тоже учатся на практике.", en:"Some questions were tricky — that's normal, real work is also learned through practice.", kz:"Кейбір сұрақтар оңай болмады — бұл қалыпты жағдай, нақты жұмыста да тәжірибе арқылы үйренеді."},
+  trialLikedQ:{ru:"Тебе понравилось это задание?", en:"Did you like this task?", kz:"Бұл тапсырма ұнады ма?"},
+  trialFbYes:{ru:"Да, было интересно", en:"Yes, it was interesting", kz:"Иә, қызық болды"},
+  trialFbMeh:{ru:"Более-менее", en:"So-so", kz:"Орташа"},
+  trialFbNo:{ru:"Не моё", en:"Not for me", kz:"Маған жат"},
+  trialThanksTitle:{ru:"Спасибо за пробу!", en:"Thanks for trying it!", kz:"Сынап көргеніңе рахмет!"},
+  trialFbTextYes:{ru:"Отлично — это хороший знак, что профессия тебе подходит.", en:"Great — that's a good sign this profession suits you.", kz:"Керемет — бұл мамандықтың саған сай келетінінің жақсы белгісі."},
+  trialFbTextMeh:{ru:"Окей, это нормально — не всё в профессии одинаково увлекательно.", en:"Okay, that's fine — not everything in a profession is equally exciting.", kz:"Жарайды, бұл қалыпты — мамандықтың барлығы бірдей қызық бола бермейді."},
+  trialFbTextNo:{ru:"Понял. Такое тоже важно знать до поступления, а не после первого курса.", en:"Got it. That's also important to know before applying, not after your first year.", kz:"Түсінікті. Мұны да түсуден бұрын білген жөн, бірінші курстан кейін емес."},
+  trialLearnedSuffix:{ru:"Мы учли это в твоём профиле.", en:"We've noted this in your profile.", kz:"Мұны профиліңе ескердік."},
+  trialBackToResults:{ru:"← Вернуться к профессиям", en:"← Back to professions", kz:"← Мамандықтарға қайту"},
+  trialChooseGoUni:{ru:"Выбрать эту профессию → вузы", en:"Choose this profession → universities", kz:"Осы мамандықты таңдау → ЖОО-лар"},
+
+  uniYourChoice:{ru:"Твой выбор", en:"Your choice", kz:"Сенің таңдауың"},
+  uniTargetHeader:{ru:"В стране, куда ты планируешь поступать — {country}", en:"In the country you plan to apply to — {country}", kz:"Түсуді жоспарлап отырған елің — {country}"},
+  uniOthersHeader:{ru:"Другие сильные варианты", en:"Other strong options", kz:"Басқа да күшті нұсқалар"},
+  uniByFieldHeader:{ru:"Университеты по направлению «{field}»", en:"Universities in the field of “{field}”", kz:"«{field}» бағыты бойынша университеттер"},
+  uniDirection:{ru:"направление", en:"field", kz:"бағыт"},
+  officialSite:{ru:"Официальный сайт ↗", en:"Official website ↗", kz:"Ресми сайт ↗"},
+  uniFootnote:{ru:"Баллы и цены — примерные ориентиры для демо-версии, а не официальные данные вузов. Перед подачей документов всегда сверяйся с актуальными требованиями на сайте университета.", en:"Scores and prices are rough estimates for this demo, not official university data. Always check current requirements on the university's website before applying.", kz:"Баллдар мен бағалар — демо-нұсқаға арналған шамамен көрсеткіштер, ЖОО-ның ресми деректері емес. Құжат тапсырар алдында әрқашан университет сайтындағы өзекті талаптарды тексер."},
+  uniChooseAnother:{ru:"Выбрать другую профессию", en:"Choose another profession", kz:"Басқа мамандық таңдау"},
+  uniMakePlan:{ru:"📅 Составить план подготовки", en:"📅 Build a prep plan", kz:"📅 Дайындық жоспарын құру"},
+  restartLink:{ru:"↺ Начать заново", en:"↺ Start over", kz:"↺ Қайтадан бастау"},
+  reqMin:{ru:"{label}: минимум ~{req}", en:"{label}: minimum ~{req}", kz:"{label}: ең төмен ~{req}"},
+  reqOk:{ru:"{label} ✓ соответствует (нужно ~{req})", en:"{label} ✓ meets it (needs ~{req})", kz:"{label} ✓ сәйкес келеді (~{req} керек)"},
+  reqWarn:{ru:"{label} ⚠ погранично (нужно ~{req})", en:"{label} ⚠ borderline (needs ~{req})", kz:"{label} ⚠ шекаралық (~{req} керек)"},
+  reqLow:{ru:"{label} ↑ стоит подтянуть (нужно ~{req})", en:"{label} ↑ needs work (needs ~{req})", kz:"{label} ↑ жақсарту керек (~{req} керек)"},
+
+  planTitle:{ru:"План подготовки", en:"Prep plan", kz:"Дайындық жоспары"},
+  planDesc:{ru:"Подстроено под то, что тебе удобно: {hours}, форматы — {formats}.", en:"Tailored to what works for you: {hours}, formats — {formats}.", kz:"Саған ыңғайлы етіп бейімделген: {hours}, форматтар — {formats}."},
+  planHoursDefault:{ru:"20–40 минут в день", en:"20–40 minutes a day", kz:"күніне 20–40 минут"},
+  planHoursSuffix:{ru:"ч/день", en:"h/day", kz:"сағ/күн"},
+  planPrinciple:{ru:"Общий принцип: чередуем форматы, которые ты сам(а) выбрал(а), чтобы подготовка не превращалась в рутину — {texts}.", en:"General principle: we alternate the formats you chose so prep doesn't turn into a routine — {texts}.", kz:"Жалпы қағида: дайындық күнделікті рутинаға айналмас үшін өзің таңдаған форматтарды кезектестіреміз — {texts}."},
+  planScheduleTitle:{ru:"Расписание на неделю", en:"Weekly schedule", kz:"Апталық кесте"},
+  planRestDay:{ru:"Отдых / лёгкое повторение", en:"Rest / light review", kz:"Демалыс / жеңіл қайталау"},
+  planRestNote:{ru:"🌿 Дай себе передышку — мозгу нужно время закрепить материал", en:"🌿 Give yourself a break — your brain needs time to consolidate the material", kz:"🌿 Өзіңе демалу бер — миға материалды бекіту үшін уақыт керек"},
+  planFootnote:{ru:"Это шаблон плана для демо-версии. В полной версии ИИ будет подстраивать план каждую неделю под твой реальный прогресс и результаты пробных тестов.", en:"This is a template plan for the demo. In the full version, AI will adjust the plan weekly based on your real progress and trial results.", kz:"Бұл демо-нұсқаға арналған жоспар үлгісі. Толық нұсқада ЖИ жоспарды әр апта сайын нақты прогресіңе және сынақ нәтижелеріңе қарай бейімдейді."},
+  planBackToUni:{ru:"Назад к вузам", en:"Back to universities", kz:"ЖОО-ларға оралу"},
+  restartBtn:{ru:"Начать заново", en:"Start over", kz:"Қайтадан бастау"},
+
+  stepAnketa:{ru:"Анкета", en:"Form", kz:"Сауалнама"},
+  stepKlimov:{ru:"Климов", en:"Klimov", kz:"Климов"},
+  stepRiasec:{ru:"RIASEC", en:"RIASEC", kz:"RIASEC"},
+  stepInterests:{ru:"Интересы", en:"Interests", kz:"Қызығушылық"},
+  stepHabits:{ru:"Привычки", en:"Habits", kz:"Әдеттер"},
+  stepAnalysis:{ru:"Анализ", en:"Analysis", kz:"Талдау"},
+  stepProfessions:{ru:"Профессии", en:"Professions", kz:"Мамандықтар"},
+
+  daysOfWeek:{
+    ru:["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"],
+    en:["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    kz:["Дүйсенбі","Сейсенбі","Сәрсенбі","Бейсенбі","Жұма","Сенбі","Жексенбі"],
+  },
+};
+
+function t(key, vars){
+  const entry = UI[key];
+  if(!entry) return key;
+  let s = entry[S.lang] || entry.ru;
+  if(vars) Object.keys(vars).forEach(k=>{ s = s.replace(new RegExp("\\{"+k+"\\}","g"), vars[k]); });
+  return s;
+}
+function L(obj, field){
+  if(S.lang==="ru") return obj[field];
+  return obj[field+"_"+S.lang] || obj[field];
+}
+
+function renderLangSwitch(){
+  const btn = document.getElementById("lang-btn");
+  if(!btn) return;
+  const m = LANG_META[S.lang];
+  btn.innerHTML = `<span class="flag">${m.flag}</span><span>${m.label}</span> ▾`;
+}
+function toggleLangMenu(e){
+  e.stopPropagation();
+  const wrap = document.getElementById("lang-switch");
+  let menu = document.getElementById("lang-menu");
+  if(menu){ menu.remove(); return; }
+  menu = document.createElement("div");
+  menu.className = "lang-menu";
+  menu.id = "lang-menu";
+  menu.innerHTML = Object.keys(LANG_META).map(code=>`
+    <button class="lang-opt ${code===S.lang?'active':''}" onclick="setLang('${code}')">
+      <span class="flag">${LANG_META[code].flag}</span>${LANG_META[code].label}
+    </button>
+  `).join("");
+  wrap.appendChild(menu);
+  document.addEventListener("click", closeLangMenuOnce, {once:true});
+}
+function closeLangMenuOnce(){
+  const menu = document.getElementById("lang-menu");
+  if(menu) menu.remove();
+}
+function setLang(code){
+  S.lang = code;
+  renderLangSwitch();
+  const menu = document.getElementById("lang-menu");
+  if(menu) menu.remove();
+  render();
+}
+
+/* ============ ДАННЫЕ ============ */
+
+const KLIMOV_QUESTIONS = [
+  {q:"Тебе дали свободный час в школе и попросили что-то организовать. Что бы ты выбрал(а)?",
+   q_en:"You've got a free hour at school and were asked to organize something. What would you choose?",
+   q_kz:"Мектепте саған бос сағат беріп, бірдеңе ұйымдастыруды сұрады. Нені таңдар едің?", opts:[
+    {t:"Разбить небольшой цветник или уголок с растениями во дворе школы", k:"pr", t_en:"Set up a small flower bed or plant corner in the schoolyard", t_kz:"Мектеп ауласында шағын гүлзар немесе өсімдіктер бұрышын жасау"},
+    {t:"Разобрать и починить старую технику в кабинете", k:"tt", t_en:"Take apart and fix old equipment in the classroom", t_kz:"Кабинеттегі ескі техниканы бөлшектеп жөндеу"},
+    {t:"Провести опрос одноклассников и обсудить с ними результаты", k:"ch", t_en:"Run a survey among classmates and discuss the results with them", t_kz:"Сыныптастардан сауалнама алып, нәтижесін бірге талқылау"},
+    {t:"Составить чёткое расписание или таблицу для мероприятия", k:"zn", t_en:"Draw up a clear schedule or table for the event", t_kz:"Іс-шараға арналған нақты кесте немесе жоспар жасау"},
+    {t:"Оформить афишу или сцену для школьного концерта", k:"hud", t_en:"Design a poster or set the stage for the school concert", t_kz:"Мектеп концертіне афиша немесе сахна безендіру"},
+  ]},
+  {q:"На стажировке нужно выбрать задачу на неделю. Какая заинтересовала бы больше?",
+   q_en:"On an internship you need to pick a task for the week. Which would interest you more?",
+   q_kz:"Тәжірибеден өту кезінде аптаға тапсырма таңдау керек. Қайсысы қызықтырар еді?", opts:[
+    {t:"Наблюдать за развитием растений в теплице и вести записи", k:"pr", t_en:"Observe plant growth in a greenhouse and keep records", t_kz:"Жылыжайда өсімдіктердің дамуын бақылап, жазбалар жүргізу"},
+    {t:"Настроить и протестировать новое оборудование", k:"tt", t_en:"Set up and test new equipment", t_kz:"Жаңа жабдықты баптап, сынақтан өткізу"},
+    {t:"Провести серию интервью с сотрудниками компании", k:"ch", t_en:"Conduct a series of interviews with company employees", t_kz:"Компания қызметкерлерімен бірнеше сұхбат жүргізу"},
+    {t:"Проанализировать таблицу с данными и найти закономерности", k:"zn", t_en:"Analyze a data table and find patterns", t_kz:"Деректер кестесін талдап, заңдылықтарды табу"},
+    {t:"Разработать дизайн для внутреннего буклета компании", k:"hud", t_en:"Design the company's internal brochure", t_kz:"Компанияның ішкі буклетінің дизайнын жасау"},
+  ]},
+  {q:"Друг просит совета, чем заняться на каникулах для саморазвития. Что бы ты предложил(а) в первую очередь себе самому/самой?",
+   q_en:"A friend asks for advice on what to do over the holidays for self-development. What would you suggest to yourself first?",
+   q_kz:"Досың демалыста өзін-өзі дамыту үшін не істеу керектігін сұрайды. Өзіңе бірінші не ұсынар едің?", opts:[
+    {t:"Экспедицию или волонтёрство по защите природы", k:"pr", t_en:"An expedition or nature conservation volunteering", t_kz:"Экспедиция немесе табиғатты қорғау бойынша еріктілік"},
+    {t:"Курс по сборке роботов или электронике", k:"tt", t_en:"A course on robot building or electronics", t_kz:"Робот құрастыру немесе электроника курсы"},
+    {t:"Лагерь вожатых или волонтёрство с детьми", k:"ch", t_en:"A camp counselor program or volunteering with kids", t_kz:"Вожатыйлар лагері немесе балалармен еріктілік"},
+    {t:"Онлайн-курс по программированию или аналитике данных", k:"zn", t_en:"An online course in programming or data analytics", t_kz:"Бағдарламалау немесе деректерді талдау бойынша онлайн курс"},
+    {t:"Мастер-класс по рисованию, музыке или монтажу видео", k:"hud", t_en:"A workshop on drawing, music or video editing", t_kz:"Сурет салу, музыка немесе видео монтаждау шеберлік сабағы"},
+  ]},
+  {q:"В командном проекте нужно выбрать роль. Какую бы ты предпочёл(предпочла)?",
+   q_en:"In a team project you need to pick a role. Which would you prefer?",
+   q_kz:"Топтық жобада рөл таңдау керек. Қайсысын қалар едің?", opts:[
+    {t:"Отвечать за живые образцы или полевые наблюдения", k:"pr", t_en:"Be in charge of live specimens or field observations", t_kz:"Тірі үлгілер немесе далалық бақылауларға жауапты болу"},
+    {t:"Собирать и тестировать прототип устройства", k:"tt", t_en:"Build and test a device prototype", t_kz:"Құрылғының прототипін құрастырып, сынау"},
+    {t:"Быть посредником между участниками, разруливать разногласия", k:"ch", t_en:"Mediate between team members and resolve disagreements", t_kz:"Қатысушылар арасында делдал болып, келіспеушіліктерді шешу"},
+    {t:"Вести расчёты бюджета и сроков проекта", k:"zn", t_en:"Handle the project's budget and timeline calculations", t_kz:"Жобаның бюджеті мен мерзімдерін есептеу"},
+    {t:"Продумывать визуальную подачу и презентацию результата", k:"hud", t_en:"Plan the visual presentation of the result", t_kz:"Нәтиженің көрнекі ұсынылуын ойластыру"},
+  ]},
+  {q:"Какая ситуация вызвала бы у тебя больше азарта?",
+   q_en:"Which situation would give you more of a thrill?",
+   q_kz:"Қай жағдай сені көбірек қызықтырар еді?", opts:[
+    {t:"Найти способ спасти заболевшее растение или животное", k:"pr", t_en:"Finding a way to save a sick plant or animal", t_kz:"Ауырған өсімдік немесе жануарды құтқару жолын табу"},
+    {t:"Понять, почему сломался механизм, и починить его", k:"tt", t_en:"Figuring out why a mechanism broke and fixing it", t_kz:"Механизмнің неге бұзылғанын түсініп, оны жөндеу"},
+    {t:"Помочь человеку, который явно расстроен, и найти решение", k:"ch", t_en:"Helping someone who's clearly upset and finding a solution", t_kz:"Көңілі қалған адамға көмектесіп, шешім табу"},
+    {t:"Найти ошибку в сложных расчётах или коде", k:"zn", t_en:"Finding a bug in complex calculations or code", t_kz:"Күрделі есептеулер немесе кодтан қате табу"},
+    {t:"Придумать что-то визуально необычное с нуля", k:"hud", t_en:"Creating something visually unusual from scratch", t_kz:"Нөлден бастап көрнекі түрде ерекше нәрсе ойлап табу"},
+  ]},
+  {q:"Тебе нужно выбрать тему для доклада. Что тебе ближе?",
+   q_en:"You need to pick a topic for a presentation. What's closer to you?",
+   q_kz:"Баяндамаға тақырып таңдау керек. Саған не жақын?", opts:[
+    {t:"Экосистемы и то, как виды приспосабливаются к среде", k:"pr", t_en:"Ecosystems and how species adapt to their environment", t_kz:"Экожүйелер және түрлердің ортаға бейімделуі"},
+    {t:"Как устроены современные машины или роботы", k:"tt", t_en:"How modern machines or robots work", t_kz:"Заманауи машиналар немесе роботтардың құрылысы"},
+    {t:"Как люди принимают решения в группе", k:"ch", t_en:"How people make decisions in a group", t_kz:"Адамдардың топта шешім қабылдауы"},
+    {t:"Как работают алгоритмы или статистика", k:"zn", t_en:"How algorithms or statistics work", t_kz:"Алгоритмдер немесе статистиканың жұмыс істеуі"},
+    {t:"История искусства или кино", k:"hud", t_en:"The history of art or cinema", t_kz:"Өнер немесе кино тарихы"},
+  ]},
+  {q:"Разбирая старый гараж или кладовку, что из найденного зацепило бы тебя больше всего?",
+   q_en:"While clearing out an old garage or storage room, what would catch your attention most?",
+   q_kz:"Ескі гараж немесе қоймадан заттарды жинастырғанда, не назарыңды көбірек аударар еді?", opts:[
+    {t:"Старые семена или садовые инструменты", k:"pr", t_en:"Old seeds or garden tools", t_kz:"Ескі тұқымдар немесе бақша құралдары"},
+    {t:"Сломанный велосипед или электронику, которую можно починить", k:"tt", t_en:"A broken bike or electronics you could fix", t_kz:"Сынған велосипед немесе жөндеуге болатын электроника"},
+    {t:"Старые письма или фото, за которыми стоят истории людей", k:"ch", t_en:"Old letters or photos with people's stories behind them", t_kz:"Артында адамдардың тарихы жатқан ескі хаттар немесе фотосуреттер"},
+    {t:"Старые документы, которые можно рассортировать по системе", k:"zn", t_en:"Old documents you could sort into a system", t_kz:"Жүйе бойынша сұрыптауға болатын ескі құжаттар"},
+    {t:"Старые эскизы, плакаты или инструменты для творчества", k:"hud", t_en:"Old sketches, posters or art supplies", t_kz:"Ескі эскиздер, плакаттар немесе шығармашылық құралдар"},
+  ]},
+  {q:"Тебе нужно выступить на школьном мероприятии. В какой роли ты бы чувствовал(а) себя увереннее?",
+   q_en:"You need to perform at a school event. In which role would you feel more confident?",
+   q_kz:"Мектеп іс-шарасында сөз сөйлеу керек. Қай рөлде өзіңді сенімдірек сезінер едің?", opts:[
+    {t:"Рассказать про экологический проект", k:"pr", t_en:"Talk about an environmental project", t_kz:"Экологиялық жоба туралы айту"},
+    {t:"Продемонстрировать работу собранного устройства", k:"tt", t_en:"Demonstrate how a device you built works", t_kz:"Құрастырған құрылғының жұмысын көрсету"},
+    {t:"Провести само мероприятие в роли ведущего(ей)", k:"ch", t_en:"Host the event itself", t_kz:"Іс-шараны жүргізуші ретінде өткізу"},
+    {t:"Показать результаты исследования в цифрах", k:"zn", t_en:"Present research results in numbers", t_kz:"Зерттеу нәтижелерін сандармен көрсету"},
+    {t:"Выступить с творческим номером или показом работ", k:"hud", t_en:"Perform a creative act or show your work", t_kz:"Шығармашылық нөмірмен немесе жұмыс көрмесімен сөз сөйлеу"},
+  ]},
+  {q:"Что расстроило бы тебя больше всего, если бы не получилось сделать хорошо?",
+   q_en:"What would upset you most if it didn't turn out well?",
+   q_kz:"Егер жақсы шықпаса, сені ең көп не ренжітер еді?", opts:[
+    {t:"Не уберечь растение или животное, о которых заботился(лась)", k:"pr", t_en:"Failing to save a plant or animal you were caring for", t_kz:"Қамқорлық жасаған өсімдік немесе жануарды сақтап қала алмау"},
+    {t:"Собрать механизм, который так и не заработает как надо", k:"tt", t_en:"Building a mechanism that never quite works right", t_kz:"Дұрыс жұмыс істемейтін механизм құрастыру"},
+    {t:"Не суметь помочь человеку, который обратился за советом", k:"ch", t_en:"Not being able to help someone who came to you for advice", t_kz:"Кеңес сұрап келген адамға көмектесе алмау"},
+    {t:"Допустить ошибку в важных расчётах", k:"zn", t_en:"Making a mistake in important calculations", t_kz:"Маңызды есептеулерде қате жіберу"},
+    {t:"Сделать творческую работу, которая никого не зацепит", k:"hud", t_en:"Creating work that fails to move anyone", t_kz:"Ешкімнің көңілін аудармайтын шығармашылық жұмыс жасау"},
+  ]},
+  {q:"Через 10 лет ты хотел(а) бы, чтобы про твою работу говорили…",
+   q_en:"In 10 years, what would you want people to say about your work…",
+   q_kz:"10 жылдан кейін жұмысың туралы не айтылғанын қалар едің…", opts:[
+    {t:"«Он(а) понимает природу лучше многих»", k:"pr", t_en:"“They understand nature better than most”", t_kz:"«Ол табиғатты көпшіліктен жақсы түсінеді»"},
+    {t:"«Он(а) может починить или создать что угодно»", k:"tt", t_en:"“They can fix or build absolutely anything”", t_kz:"«Ол кез келген нәрсені жөндеп немесе жасай алады»"},
+    {t:"«К нему(ней) идут за советом и поддержкой»", k:"ch", t_en:"“People come to them for advice and support”", t_kz:"«Оған кеңес пен қолдау алу үшін келеді»"},
+    {t:"«Он(а) не ошибается в расчётах и логике»", k:"zn", t_en:"“They never get the numbers or the logic wrong”", t_kz:"«Ол есептеу мен логикада қателеспейді»"},
+    {t:"«У него(неё) особый взгляд и стиль»", k:"hud", t_en:"“They have a distinctive eye and style”", t_kz:"«Оның ерекше көзқарасы мен стилі бар»"},
+  ]},
+];
+
+const KLIMOV_LABEL = {
+  tt:{ru:"Человек — Техника", en:"Human — Technology", kz:"Адам — Техника"},
+  ch:{ru:"Человек — Человек", en:"Human — Human", kz:"Адам — Адам"},
+  pr:{ru:"Человек — Природа", en:"Human — Nature", kz:"Адам — Табиғат"},
+  zn:{ru:"Человек — Знаковая система", en:"Human — Sign System", kz:"Адам — Белгілер жүйесі"},
+  hud:{ru:"Человек — Художественный образ", en:"Human — Artistic Image", kz:"Адам — Көркем бейне"},
+};
+
+const RIASEC_ITEMS = [
+  {t:"Мне больше нравится сделать что-то своими руками, чем просто обсуждать, как это сделать", k:"R", t_en:"I'd rather make something with my hands than just discuss how to do it", t_kz:"Қалай жасау керектігін талқылағаннан гөрі, қолыммен бірдеңе жасағанды жақсы көремін"},
+  {t:"Я лучше разбираюсь в вещах, когда могу их потрогать, собрать или разобрать", k:"R", t_en:"I understand things better when I can touch, assemble or take them apart", t_kz:"Затты ұстап, құрастырып немесе бөлшектеп көрсем, жақсырақ түсінемін"},
+  {t:"Мне нравится докапываться до сути — понимать, почему что-то работает именно так", k:"I", t_en:"I like getting to the bottom of things — understanding why something works the way it does", t_kz:"Мәніне жету, бір нәрсенің неге дәл солай жұмыс істейтінін түсіну маған ұнайды"},
+  {t:"Я готов(а) подолгу разбираться в сложной задаче, если это раскрывает что-то новое", k:"I", t_en:"I'm willing to work through a hard problem for a long time if it reveals something new", t_kz:"Жаңа нәрсе ашатын болса, күрделі мәселені ұзақ уақыт зерттеуге дайынмын"},
+  {t:"Мне важно, чтобы то, что я делаю, было выражением именно моего стиля и вкуса", k:"A", t_en:"It matters to me that what I create reflects my own style and taste", t_kz:"Істейтін ісім өз стилім мен талғамымды білдіруі маңызды"},
+  {t:"Мне важнее помочь человеку самому разобраться в проблеме, чем просто дать готовый ответ", k:"S", t_en:"I'd rather help someone work through a problem themselves than just hand them an answer", t_kz:"Дайын жауап бергеннен гөрі, адамға мәселені өзі шешуге көмектескен маңыздырақ"},
+  {t:"Я быстро считываю настроение людей и подстраиваюсь под ситуацию", k:"S", t_en:"I quickly pick up on people's moods and adjust to the situation", t_kz:"Адамдардың көңіл-күйін тез аңғарып, жағдайға бейімделемін"},
+  {t:"Мне нравится брать на себя ответственность за результат и вести за собой других", k:"E", t_en:"I like taking responsibility for the outcome and leading others", t_kz:"Нәтижеге жауапкершілік алып, басқаларды бастап апаруды ұнатамын"},
+  {t:"Я легко иду на риск, если вижу в этом реальную выгоду или новую возможность", k:"E", t_en:"I take risks easily if I see real benefit or a new opportunity in it", t_kz:"Нақты пайда немесе жаңа мүмкіндік көрсем, тәуекелге оңай барамын"},
+  {t:"Мне спокойнее, когда есть чёткая система и порядок, а не хаос и импровизация", k:"C", t_en:"I feel calmer when there's a clear system and order, rather than chaos and improvisation", t_kz:"Хаос пен импровизациядан гөрі, нақты жүйе мен тәртіп болғанда өзімді тыныш сезінемін"},
+];
+
+const TAGS = [
+  {k:"it", l:"IT и технологии", l_en:"IT & technology", l_kz:"IT және технология"}, {k:"med", l:"Медицина и здоровье", l_en:"Medicine & health", l_kz:"Медицина және денсаулық"},
+  {k:"biz", l:"Бизнес", l_en:"Business", l_kz:"Бизнес"}, {k:"art", l:"Искусство и творчество", l_en:"Art & creativity", l_kz:"Өнер және шығармашылық"},
+  {k:"sci", l:"Наука", l_en:"Science", l_kz:"Ғылым"}, {k:"sport", l:"Спорт", l_en:"Sports", l_kz:"Спорт"},
+  {k:"help", l:"Помощь людям", l_en:"Helping people", l_kz:"Адамдарға көмек"}, {k:"nature", l:"Природа и животные", l_en:"Nature & animals", l_kz:"Табиғат және жануарлар"},
+  {k:"build", l:"Строительство и техника", l_en:"Construction & engineering", l_kz:"Құрылыс және техника"}, {k:"comm", l:"Общение", l_en:"Communication", l_kz:"Қарым-қатынас"},
+  {k:"lang", l:"Иностранные языки", l_en:"Foreign languages", l_kz:"Шет тілдері"}, {k:"math", l:"Математика и логика", l_en:"Math & logic", l_kz:"Математика және логика"},
+  {k:"game", l:"Игры и геймдев", l_en:"Games & game dev", l_kz:"Ойындар және геймдев"}, {k:"media", l:"Кино и медиа", l_en:"Film & media", l_kz:"Кино және медиа"}, {k:"law", l:"Право", l_en:"Law", l_kz:"Құқық"},
+];
+
+const PROFESSIONS = [
+  {id:"dev", name:"Разработчик программного обеспечения", name_en:"Software Developer", name_kz:"Бағдарламалық қамтамасыз ету әзірлеушісі", field:"IT", klimov:"zn", riasec:["I","R"], tags:["it","math","game"], desc:"Создаёт сайты, приложения и сервисы — от идеи до рабочего кода.", desc_en:"Builds websites, apps and services — from idea to working code.", desc_kz:"Идеядан жұмыс істейтін кодқа дейін сайттар, қосымшалар мен қызметтер жасайды."},
+  {id:"uxui", name:"UX/UI-дизайнер", name_en:"UX/UI Designer", name_kz:"UX/UI-дизайнер", field:"Дизайн", klimov:"hud", riasec:["A","I"], tags:["it","art"], desc:"Продумывает, как выглядит и как ощущается интерфейс приложения или сайта.", desc_en:"Designs how an app or website looks and feels to use.", desc_kz:"Қосымша немесе сайттың интерфейсі қалай көрінетінін және сезілетінін ойластырады."},
+  {id:"doc", name:"Врач", name_en:"Doctor", name_kz:"Дәрігер", field:"Медицина", klimov:"ch", riasec:["I","S"], tags:["med","help"], desc:"Диагностирует и лечит людей, несёт ответственность за здоровье пациентов.", desc_en:"Diagnoses and treats people, responsible for patients' health.", desc_kz:"Адамдарды диагностикалап, емдейді, науқастардың денсаулығына жауапты болады."},
+  {id:"vet", name:"Ветеринар", name_en:"Veterinarian", name_kz:"Ветеринар", field:"Ветеринария", klimov:"pr", riasec:["I","R"], tags:["nature","med"], desc:"Лечит животных и заботится об их здоровье.", desc_en:"Treats animals and looks after their health.", desc_kz:"Жануарларды емдеп, олардың денсаулығына қамқорлық жасайды."},
+  {id:"mech", name:"Инженер-механик", name_en:"Mechanical Engineer", name_kz:"Инженер-механик", field:"Инженерия", klimov:"tt", riasec:["R","I"], tags:["build","math"], desc:"Проектирует и создаёт механизмы, машины и оборудование.", desc_en:"Designs and builds mechanisms, machines and equipment.", desc_kz:"Механизмдерді, машиналар мен жабдықтарды жобалайды және жасайды."},
+  {id:"arch", name:"Архитектор", name_en:"Architect", name_kz:"Сәулетші", field:"Архитектура", klimov:"hud", riasec:["A","R"], tags:["build","art"], desc:"Проектирует здания и пространства, где людям удобно жить и работать.", desc_en:"Designs buildings and spaces where people can live and work comfortably.", desc_kz:"Адамдарға тұруға және жұмыс істеуге ыңғайлы ғимараттар мен кеңістіктерді жобалайды."},
+  {id:"law", name:"Юрист", name_en:"Lawyer", name_kz:"Заңгер", field:"Право", klimov:"ch", riasec:["E","C"], tags:["law","comm"], desc:"Защищает права людей и компаний, разбирается в законах и договорах.", desc_en:"Protects the rights of people and companies, understands laws and contracts.", desc_kz:"Адамдар мен компаниялардың құқығын қорғайды, заңдар мен келісімшарттарды түсінеді."},
+  {id:"psy", name:"Психолог", name_en:"Psychologist", name_kz:"Психолог", field:"Психология и педагогика", klimov:"ch", riasec:["S","I"], tags:["help","comm"], desc:"Помогает людям разобраться в себе и справляться с трудностями.", desc_en:"Helps people understand themselves and cope with difficulties.", desc_kz:"Адамдарға өздерін түсінуге және қиындықтарды жеңуге көмектеседі."},
+  {id:"mark", name:"Маркетолог", name_en:"Marketer", name_kz:"Маркетолог", field:"Бизнес и экономика", klimov:"ch", riasec:["E","A"], tags:["biz","comm"], desc:"Продумывает, как рассказать о продукте так, чтобы его захотели купить.", desc_en:"Figures out how to present a product so people want to buy it.", desc_kz:"Өнім туралы оны сатып алғысы келетіндей етіп қалай айту керектігін ойластырады."},
+  {id:"biz", name:"Предприниматель", name_en:"Entrepreneur", name_kz:"Кәсіпкер", field:"Бизнес и экономика", klimov:"ch", riasec:["E","C"], tags:["biz"], desc:"Запускает и развивает собственное дело, берёт на себя риск и решения.", desc_en:"Launches and grows their own business, taking on risk and decisions.", desc_kz:"Өз ісін бастап, дамытады, тәуекел мен шешімдерді өз мойнына алады."},
+  {id:"bio", name:"Биолог-исследователь", name_en:"Research Biologist", name_kz:"Биолог-зерттеуші", field:"Наука", klimov:"pr", riasec:["I"], tags:["sci","nature"], desc:"Изучает живые организмы, ведёт исследования в лаборатории и в поле.", desc_en:"Studies living organisms, doing research in the lab and in the field.", desc_kz:"Тірі organizmдерді зерттейді, зертханада және далада зерттеу жүргізеді."},
+  {id:"chem", name:"Химик", name_en:"Chemist", name_kz:"Химик", field:"Наука", klimov:"zn", riasec:["I"], tags:["sci","math"], desc:"Исследует вещества и реакции, разрабатывает новые материалы.", desc_en:"Studies substances and reactions, develops new materials.", desc_kz:"Заттар мен реакцияларды зерттейді, жаңа материалдар жасайды."},
+  {id:"phys", name:"Физик-инженер", name_en:"Physics Engineer", name_kz:"Физик-инженер", field:"Наука", klimov:"tt", riasec:["I","R"], tags:["sci","math"], desc:"Применяет законы физики для разработки технологий и оборудования.", desc_en:"Applies the laws of physics to develop technology and equipment.", desc_kz:"Технология мен жабдықты жасау үшін физика заңдарын қолданады."},
+  {id:"jour", name:"Журналист", name_en:"Journalist", name_kz:"Журналист", field:"Журналистика и медиа", klimov:"hud", riasec:["A","S"], tags:["media","comm"], desc:"Находит и рассказывает истории, которые важно знать людям.", desc_en:"Finds and tells stories that people need to know.", desc_kz:"Адамдарға білу маңызды оқиғаларды тауып, айтып береді."},
+  {id:"dir", name:"Режиссёр / видеопродюсер", name_en:"Director / Video Producer", name_kz:"Режиссёр / видеопродюсер", field:"Журналистика и медиа", klimov:"hud", riasec:["A"], tags:["media","art"], desc:"Придумывает и снимает фильмы, ролики, контент для медиа.", desc_en:"Comes up with and shoots films, clips and media content.", desc_kz:"Фильмдер, роликтер, медиа контент ойлап табады және түсіреді."},
+  {id:"teach", name:"Учитель", name_en:"Teacher", name_kz:"Мұғалім", field:"Психология и педагогика", klimov:"ch", riasec:["S"], tags:["help","comm"], desc:"Объясняет, вдохновляет и помогает ученикам расти.", desc_en:"Explains, inspires and helps students grow.", desc_kz:"Түсіндіреді, шабыттандырады және оқушылардың дамуына көмектеседі."},
+  {id:"data", name:"Аналитик данных", name_en:"Data Analyst", name_kz:"Деректер аналитигі", field:"IT", klimov:"zn", riasec:["I","C"], tags:["it","math"], desc:"Находит закономерности в данных и помогает принимать решения на их основе.", desc_en:"Finds patterns in data and helps make decisions based on them.", desc_kz:"Деректерден заңдылықтарды табады және соның негізінде шешім қабылдауға көмектеседі."},
+  {id:"fin", name:"Финансист / экономист", name_en:"Finance Specialist / Economist", name_kz:"Қаржыгер / экономист", field:"Бизнес и экономика", klimov:"zn", riasec:["C","E"], tags:["biz","math"], desc:"Анализирует деньги, рынки и риски, помогает бизнесу расти.", desc_en:"Analyzes money, markets and risk, helps businesses grow.", desc_kz:"Ақша, нарық және тәуекелді талдайды, бизнестің өсуіне көмектеседі."},
+  {id:"coach", name:"Спортивный тренер", name_en:"Sports Coach", name_kz:"Спорттық жаттықтырушы", field:"Спорт и физическая культура", klimov:"ch", riasec:["S","R"], tags:["sport","help"], desc:"Готовит спортсменов, выстраивает тренировки и стратегию.", desc_en:"Prepares athletes, builds training plans and strategy.", desc_kz:"Спортшыларды дайындайды, жаттығу мен стратегияны құрады."},
+  {id:"chef", name:"Шеф-повар", name_en:"Head Chef", name_kz:"Бас аспазшы", field:"Кулинария и гостеприимство", klimov:"hud", riasec:["R","A"], tags:["art"], desc:"Создаёт блюда и вкусы, управляет кухней.", desc_en:"Creates dishes and flavors, runs the kitchen.", desc_kz:"Тағамдар мен дәм жасайды, асхананы басқарады."},
+  {id:"fashion", name:"Модельер", name_en:"Fashion Designer", name_kz:"Модельер", field:"Дизайн", klimov:"hud", riasec:["A"], tags:["art"], desc:"Придумывает и создаёт одежду, работает с формой, тканью и стилем.", desc_en:"Designs and creates clothing, working with shape, fabric and style.", desc_kz:"Киім ойлап табады және жасайды, пішін, мата және стильмен жұмыс істейді."},
+  {id:"pilot", name:"Пилот", name_en:"Pilot", name_kz:"Ұшқыш", field:"Авиация", klimov:"tt", riasec:["R","I"], tags:["sport","build"], desc:"Управляет воздушным судном, отвечает за безопасность полёта.", desc_en:"Flies aircraft and is responsible for flight safety.", desc_kz:"Ұшақты басқарады, ұшу қауіпсіздігіне жауап береді."},
+  {id:"gamedev", name:"Разработчик игр", name_en:"Game Developer", name_kz:"Ойын әзірлеушісі", field:"IT", klimov:"zn", riasec:["A","I"], tags:["it","game"], desc:"Создаёт игровые механики, миры и логику игр.", desc_en:"Builds game mechanics, worlds and game logic.", desc_kz:"Ойын механикасын, әлемін және логикасын жасайды."},
+  {id:"translate", name:"Переводчик / лингвист", name_en:"Translator / Linguist", name_kz:"Аудармашы / лингвист", field:"Лингвистика", klimov:"zn", riasec:["A","I"], tags:["lang","comm"], desc:"Работает с языками — переводит, преподаёт, исследует их структуру.", desc_en:"Works with languages — translating, teaching, researching their structure.", desc_kz:"Тілдермен жұмыс істейді — аударады, оқытады, олардың құрылымын зерттейді."},
+  {id:"build", name:"Инженер-строитель", name_en:"Civil Engineer", name_kz:"Құрылыс инженері", field:"Инженерия", klimov:"tt", riasec:["R"], tags:["build"], desc:"Руководит и участвует в возведении зданий и инфраструктуры.", desc_en:"Leads and takes part in building structures and infrastructure.", desc_kz:"Ғимараттар мен инфрақұрылымды салуға басшылық жасайды және қатысады."},
+];
+
+const FIELD_LABEL = {
+  "IT":{ru:"IT", en:"IT", kz:"IT"},
+  "Дизайн":{ru:"Дизайн", en:"Design", kz:"Дизайн"},
+  "Медицина":{ru:"Медицина", en:"Medicine", kz:"Медицина"},
+  "Ветеринария":{ru:"Ветеринария", en:"Veterinary Medicine", kz:"Ветеринария"},
+  "Инженерия":{ru:"Инженерия", en:"Engineering", kz:"Инженерия"},
+  "Архитектура":{ru:"Архитектура", en:"Architecture", kz:"Сәулет өнері"},
+  "Право":{ru:"Право", en:"Law", kz:"Құқық"},
+  "Психология и педагогика":{ru:"Психология и педагогика", en:"Psychology & Education", kz:"Психология және педагогика"},
+  "Бизнес и экономика":{ru:"Бизнес и экономика", en:"Business & Economics", kz:"Бизнес және экономика"},
+  "Наука":{ru:"Наука", en:"Science", kz:"Ғылым"},
+  "Журналистика и медиа":{ru:"Журналистика и медиа", en:"Journalism & Media", kz:"Журналистика және медиа"},
+  "Спорт и физическая культура":{ru:"Спорт и физическая культура", en:"Sports", kz:"Спорт және дене шынықтыру"},
+  "Кулинария и гостеприимство":{ru:"Кулинария и гостеприимство", en:"Culinary & Hospitality", kz:"Кулинария және қонақжайлылық"},
+  "Авиация":{ru:"Авиация", en:"Aviation", kz:"Авиация"},
+  "Лингвистика":{ru:"Лингвистика", en:"Linguistics", kz:"Лингвистика"},
+};
+function fieldLabel(field){
+  const e = FIELD_LABEL[field];
+  return e ? (e[S.lang] || e.ru) : field;
+}
+
+const FIELD_UNIS = {
+  "IT": [
+    {c:"KZ", name:"Astana IT University", reqEnt:95, reqIelts:6.0, price:"Грант от 95 баллов ЕНТ · платное ~1 200 000 ₸/год", url:"https://astanait.edu.kz"},
+    {c:"KZ", name:"КБТУ (Казахстанско-Британский технический университет)", reqEnt:90, reqIelts:6.0, price:"Грант от 90 баллов ЕНТ · платное ~1 500 000 ₸/год", url:"https://kbtu.edu.kz"},
+    {c:"KZ", name:"Nazarbayev University — School of Engineering and Digital Sciences", reqEnt:115, reqIelts:6.5, price:"Почти все студенты — на полном гранте (обучение + проживание)", url:"https://nu.edu.kz"},
+    {c:"RU", name:"Университет ИТМО", reqIelts:6.0, price:"Бюджетные места по ЕГЭ · платное ~350 000 ₽/год", url:"https://itmo.ru"},
+    {c:"US", name:"Carnegie Mellon University", reqSat:1500, reqIelts:7.0, price:"~$62 000/год (есть need-based стипендии)", url:"https://www.cmu.edu"},
+    {c:"UK", name:"University of Edinburgh — Informatics", reqIelts:6.5, price:"~£26 000/год для иностранных студентов", url:"https://www.ed.ac.uk"},
+  ],
+  "Дизайн": [
+    {c:"KZ", name:"КазНУИ (Казахская национальная академия искусств)", reqEnt:70, reqIelts:5.5, price:"Грант от 70 баллов ЕНТ · платное ~900 000 ₸/год", url:"https://tzhurgenov.kz"},
+    {c:"KZ", name:"Turan University — факультет дизайна", reqEnt:65, reqIelts:5.0, price:"Грант от 65 баллов ЕНТ · платное ~850 000 ₸/год", url:"https://turan-edu.kz"},
+    {c:"RU", name:"Британская высшая школа дизайна", reqIelts:6.0, price:"Платное обучение ~500 000 ₽/год", url:"https://britishdesign.ru"},
+    {c:"US", name:"Rhode Island School of Design", reqSat:1350, reqIelts:6.5, price:"~$58 000/год (есть стипендии за портфолио)", url:"https://www.risd.edu"},
+    {c:"UK", name:"Central Saint Martins (UAL)", reqIelts:6.5, price:"~£28 000/год для иностранных студентов", url:"https://www.arts.ac.uk/colleges/central-saint-martins"},
+  ],
+  "Медицина": [
+    {c:"KZ", name:"КазНМУ им. Асфендиярова", reqEnt:110, reqIelts:5.5, price:"Грант от 110 баллов ЕНТ · платное ~1 600 000 ₸/год", url:"https://kaznmu.edu.kz"},
+    {c:"KZ", name:"Медицинский университет Караганды", reqEnt:100, reqIelts:5.0, price:"Грант от 100 баллов ЕНТ · платное ~1 300 000 ₸/год", url:"https://qmu.edu.kz"},
+    {c:"KZ", name:"Медицинский университет Семей", reqEnt:90, reqIelts:5.0, price:"Грант от 90 баллов ЕНТ · платное ~1 050 000 ₸/год", url:"https://smu.edu.kz"},
+    {c:"KZ", name:"Казахстанско-Российский медицинский университет", reqEnt:95, reqIelts:5.0, price:"Грант от 95 баллов ЕНТ · платное ~1 100 000 ₸/год", url:"https://krmu.edu.kz"},
+    {c:"RU", name:"Первый МГМУ им. Сеченова", reqIelts:6.0, price:"Бюджетные места по ЕГЭ · платное ~450 000 ₽/год", url:"https://www.sechenov.ru"},
+    {c:"US", name:"Johns Hopkins University", reqSat:1550, reqIelts:7.5, price:"~$63 000/год (щедрая need-based помощь)", url:"https://www.jhu.edu"},
+    {c:"UK", name:"Imperial College London", reqIelts:7.0, price:"~£47 000/год для иностранных студентов", url:"https://www.imperial.ac.uk"},
+  ],
+  "Ветеринария": [
+    {c:"KZ", name:"Казахский агротехнический университет", reqEnt:75, reqIelts:5.0, price:"Грант от 75 баллов ЕНТ · платное ~700 000 ₸/год", url:"https://kazatu.edu.kz"},
+    {c:"KZ", name:"КазНАУ (Алматы) — факультет ветеринарии", reqEnt:70, reqIelts:5.0, price:"Грант от 70 баллов ЕНТ · платное ~750 000 ₸/год", url:"https://kaznaru.edu.kz"},
+    {c:"RU", name:"МВА им. К.И. Скрябина", reqIelts:5.5, price:"Бюджетные места по ЕГЭ · платное ~280 000 ₽/год", url:"https://www.mgavm.ru"},
+    {c:"US", name:"Cornell University — Veterinary", reqSat:1480, reqIelts:7.0, price:"~$68 000/год (есть стипендии)", url:"https://www.vet.cornell.edu"},
+    {c:"UK", name:"Royal Veterinary College", reqIelts:6.5, price:"~£30 000/год для иностранных студентов", url:"https://www.rvc.ac.uk"},
+  ],
+  "Инженерия": [
+    {c:"KZ", name:"Satbayev University", reqEnt:90, reqIelts:5.5, price:"Грант от 90 баллов ЕНТ · платное ~1 100 000 ₸/год", url:"https://satbayev.university"},
+    {c:"KZ", name:"КБТУ — инженерные специальности", reqEnt:85, reqIelts:5.5, price:"Грант от 85 баллов ЕНТ · платное ~1 400 000 ₸/год", url:"https://kbtu.edu.kz"},
+    {c:"KZ", name:"ЕНУ им. Л.Н. Гумилёва — инженерный факультет", reqEnt:80, reqIelts:5.0, price:"Грант от 80 баллов ЕНТ · платное ~900 000 ₸/год", url:"https://www.enu.kz"},
+    {c:"KZ", name:"Карагандинский технический университет им. А. Сагинова", reqEnt:65, reqIelts:4.5, price:"Грант от 65 баллов ЕНТ · платное ~600 000 ₸/год", url:"https://www.kstu.kz"},
+    {c:"KZ", name:"Южно-Казахстанский университет им. М. Ауэзова (Шымкент)", reqEnt:60, reqIelts:4.5, price:"Грант от 60 баллов ЕНТ · платное ~550 000 ₸/год", url:"https://auezov.edu.kz"},
+    {c:"KZ", name:"Атырауский университет нефти и газа им. С. Утебаева", reqEnt:65, reqIelts:4.5, price:"Грант от 65 баллов ЕНТ · платное ~700 000 ₸/год", url:"https://aogu.edu.kz"},
+    {c:"RU", name:"МГТУ им. Н.Э. Баумана", reqIelts:5.5, price:"Бюджетные места по ЕГЭ · платное ~300 000 ₽/год", url:"https://bmstu.ru"},
+    {c:"US", name:"Massachusetts Institute of Technology", reqSat:1540, reqIelts:7.0, price:"~$60 000/год (щедрая need-based помощь)", url:"https://web.mit.edu"},
+    {c:"DE", name:"TU München", reqIelts:6.5, price:"Почти бесплатно — семестровый взнос ~150 €", url:"https://www.tum.de"},
+  ],
+  "Архитектура": [
+    {c:"KZ", name:"КазГАСА (Алматы)", reqEnt:85, reqIelts:5.5, price:"Грант от 85 баллов ЕНТ · платное ~950 000 ₸/год", url:"https://kazgasa.kz"},
+    {c:"KZ", name:"Turan University — факультет архитектуры", reqEnt:75, reqIelts:5.0, price:"Грант от 75 баллов ЕНТ · платное ~850 000 ₸/год", url:"https://turan-edu.kz"},
+    {c:"RU", name:"МАРХИ", reqIelts:6.0, price:"Бюджетные места по ЕГЭ · платное ~350 000 ₽/год", url:"https://www.marhi.ru"},
+    {c:"UK", name:"The Bartlett, UCL", reqIelts:6.5, price:"~£32 000/год для иностранных студентов", url:"https://www.ucl.ac.uk/bartlett"},
+    {c:"DE", name:"TU Berlin", reqIelts:6.0, price:"Почти бесплатно — семестровый взнос ~300 €", url:"https://www.tu.berlin"},
+  ],
+  "Право": [
+    {c:"KZ", name:"Каспийский университет (КазГЮУ)", reqEnt:95, reqIelts:5.5, price:"Грант от 95 баллов ЕНТ · платное ~1 000 000 ₸/год", url:"https://kaspiuniversity.kz"},
+    {c:"KZ", name:"КИМЭП (KIMEP University) — School of Law", reqEnt:90, reqIelts:6.0, price:"Платное ~2 600 000 ₸/год (есть стипендии за баллы)", url:"https://www.kimep.kz"},
+    {c:"KZ", name:"КазНУ им. аль-Фараби — юридический факультет", reqEnt:100, reqIelts:5.5, price:"Грант от 100 баллов ЕНТ · платное ~900 000 ₸/год", url:"https://www.kaznu.kz"},
+    {c:"RU", name:"МГЮА им. О.Е. Кутафина", reqIelts:6.0, price:"Бюджетные места по ЕГЭ · платное ~400 000 ₽/год", url:"https://msal.ru"},
+    {c:"UK", name:"University of Cambridge — Law", reqIelts:7.5, price:"~£38 000/год для иностранных студентов", url:"https://www.law.cam.ac.uk"},
+    {c:"US", name:"Harvard College — Pre-Law track", reqSat:1560, reqIelts:7.5, price:"~$56 000/год (щедрая need-based помощь)", url:"https://college.harvard.edu"},
+  ],
+  "Психология и педагогика": [
+    {c:"KZ", name:"КазНПУ им. Абая", reqEnt:75, reqIelts:5.0, price:"Грант от 75 баллов ЕНТ · платное ~750 000 ₸/год", url:"https://www.abaiuniversity.edu.kz"},
+    {c:"KZ", name:"Университет Нархоз — факультет психологии", reqEnt:70, reqIelts:5.5, price:"Грант от 70 баллов ЕНТ · платное ~1 300 000 ₸/год", url:"https://narxoz.kz"},
+    {c:"KZ", name:"Актюбинский региональный университет им. К. Жубанова", reqEnt:55, reqIelts:4.5, price:"Грант от 55 баллов ЕНТ · платное ~550 000 ₸/год", url:"https://aru.edu.kz"},
+    {c:"RU", name:"МГППУ", reqIelts:5.5, price:"Бюджетные места по ЕГЭ · платное ~250 000 ₽/год", url:"https://mgppu.ru"},
+    {c:"UK", name:"UCL — Psychology", reqIelts:6.5, price:"~£26 000/год для иностранных студентов", url:"https://www.ucl.ac.uk/pals"},
+    {c:"US", name:"Stanford University", reqSat:1520, reqIelts:7.0, price:"~$62 000/год (щедрая need-based помощь)", url:"https://www.stanford.edu"},
+  ],
+  "Бизнес и экономика": [
+    {c:"KZ", name:"Almaty Management University", reqEnt:80, reqIelts:5.5, price:"Грант от 80 баллов ЕНТ · платное ~1 400 000 ₸/год", url:"https://almau.edu.kz"},
+    {c:"KZ", name:"КИМЭП (KIMEP University) — бизнес-школа", reqEnt:85, reqIelts:6.0, price:"Платное ~2 600 000 ₸/год (есть стипендии за баллы)", url:"https://www.kimep.kz"},
+    {c:"KZ", name:"Университет Нархоз", reqEnt:75, reqIelts:5.5, price:"Грант от 75 баллов ЕНТ · платное ~1 300 000 ₸/год", url:"https://narxoz.kz"},
+    {c:"KZ", name:"Торайгыров университет (Павлодар)", reqEnt:55, reqIelts:4.5, price:"Грант от 55 баллов ЕНТ · платное ~600 000 ₸/год", url:"https://tou.edu.kz"},
+    {c:"RU", name:"НИУ ВШЭ", reqIelts:6.0, price:"Бюджетные места по ЕГЭ · платное ~600 000 ₽/год", url:"https://www.hse.ru"},
+    {c:"UK", name:"London School of Economics", reqIelts:7.0, price:"~£24 000/год для иностранных студентов", url:"https://www.lse.ac.uk"},
+    {c:"US", name:"University of Pennsylvania — Wharton", reqSat:1540, reqIelts:7.0, price:"~$66 000/год (щедрая need-based помощь)", url:"https://www.wharton.upenn.edu"},
+  ],
+  "Наука": [
+    {c:"KZ", name:"Назарбаев Университет", reqEnt:105, reqIelts:6.5, price:"Почти все студенты — на полном гранте (обучение + проживание)", url:"https://nu.edu.kz"},
+    {c:"KZ", name:"КазНУ им. аль-Фараби — физико-математический факультет", reqEnt:95, reqIelts:5.5, price:"Грант от 95 баллов ЕНТ · платное ~800 000 ₸/год", url:"https://www.kaznu.kz"},
+    {c:"KZ", name:"ВКТУ им. Д. Серикбаева (Усть-Каменогорск)", reqEnt:65, reqIelts:5.0, price:"Грант от 65 баллов ЕНТ · платное ~650 000 ₸/год", url:"https://www.ektu.kz"},
+    {c:"RU", name:"МГУ им. М.В. Ломоносова", reqIelts:6.0, price:"Бюджетные места по ЕГЭ · платное ~390 000 ₽/год", url:"https://www.msu.ru"},
+    {c:"US", name:"California Institute of Technology", reqSat:1560, reqIelts:7.0, price:"~$60 000/год (щедрая need-based помощь)", url:"https://www.caltech.edu"},
+    {c:"UK", name:"University of Oxford", reqIelts:7.0, price:"~£38 000/год для иностранных студентов", url:"https://www.ox.ac.uk"},
+  ],
+  "Журналистика и медиа": [
+    {c:"KZ", name:"КазНУ им. аль-Фараби — журфак", reqEnt:65, reqIelts:5.0, price:"Грант от 65 баллов ЕНТ · платное ~750 000 ₸/год", url:"https://www.kaznu.kz"},
+    {c:"KZ", name:"Казахстанско-Немецкий университет — медиакоммуникации", reqEnt:60, reqIelts:5.0, price:"Грант от 60 баллов ЕНТ · платное ~900 000 ₸/год", url:"https://dku.kz"},
+    {c:"RU", name:"МГУ — факультет журналистики", reqIelts:5.5, price:"Бюджетные места по ЕГЭ · платное ~350 000 ₽/год", url:"https://www.journ.msu.ru"},
+    {c:"UK", name:"University of Sheffield — Journalism", reqIelts:6.5, price:"~£23 000/год для иностранных студентов", url:"https://www.sheffield.ac.uk"},
+    {c:"US", name:"Northwestern University — Medill", reqSat:1470, reqIelts:7.0, price:"~$64 000/год (щедрая need-based помощь)", url:"https://www.medill.northwestern.edu"},
+  ],
+  "Спорт и физическая культура": [
+    {c:"KZ", name:"Казахская академия спорта и туризма", reqEnt:60, reqIelts:4.5, price:"Грант от 60 баллов ЕНТ · платное ~650 000 ₸/год", url:"https://kazast.edu.kz"},
+    {c:"KZ", name:"КазНПУ им. Абая — факультет физической культуры", reqEnt:55, reqIelts:4.5, price:"Грант от 55 баллов ЕНТ · платное ~600 000 ₸/год", url:"https://www.abaiuniversity.edu.kz"},
+    {c:"RU", name:"РГУФКСМиТ (ГЦОЛИФК)", reqIelts:5.0, price:"Бюджетные места по ЕГЭ · платное ~250 000 ₽/год", url:"https://sportedu.ru"},
+    {c:"US", name:"University of Florida — Sport Management", reqSat:1300, reqIelts:6.5, price:"~$43 000/год (для иностранных студентов)", url:"https://www.ufl.edu"},
+  ],
+  "Кулинария и гостеприимство": [
+    {c:"KZ", name:"Алматинский технологический университет", reqEnt:55, reqIelts:4.5, price:"Грант от 55 баллов ЕНТ · платное ~700 000 ₸/год", url:"https://atu.edu.kz"},
+    {c:"KZ", name:"Almaty Management University — гостиничный бизнес", reqEnt:60, reqIelts:5.0, price:"Грант от 60 баллов ЕНТ · платное ~1 200 000 ₸/год", url:"https://almau.edu.kz"},
+    {c:"TR", name:"Özyeğin University — Gastronomy", reqIelts:6.0, price:"~$12 000/год (есть стипендии до 100%)", url:"https://www.ozyegin.edu.tr"},
+    {c:"US", name:"Culinary Institute of America", reqIelts:6.0, price:"~$38 000/год", url:"https://www.ciachef.edu"},
+  ],
+  "Авиация": [
+    {c:"KZ", name:"Академия гражданской авиации (Алматы)", reqEnt:75, reqIelts:5.5, price:"Грант от 75 баллов ЕНТ · платное (лётная подготовка) ~1 300 000 ₸/год", url:"https://caa.edu.kz"},
+    {c:"KZ", name:"Казахская академия транспорта и коммуникаций — авиатранспорт", reqEnt:65, reqIelts:5.0, price:"Грант от 65 баллов ЕНТ · платное ~900 000 ₸/год", url:"https://kazatc.kz"},
+    {c:"RU", name:"МГТУ ГА", reqIelts:5.0, price:"Бюджетные места по ЕГЭ · платное ~300 000 ₽/год", url:"https://www.mstuca.ru"},
+    {c:"US", name:"Embry-Riddle Aeronautical University", reqSat:1250, reqIelts:6.5, price:"~$40 000/год", url:"https://www.erau.edu"},
+  ],
+  "Лингвистика": [
+    {c:"KZ", name:"КазУМОиМЯ им. Абылай хана", reqEnt:70, reqIelts:6.0, price:"Грант от 70 баллов ЕНТ · платное ~800 000 ₸/год", url:"https://ablaikhan.kz"},
+    {c:"KZ", name:"КазНУ им. аль-Фараби — факультет филологии", reqEnt:65, reqIelts:6.0, price:"Грант от 65 баллов ЕНТ · платное ~750 000 ₸/год", url:"https://www.kaznu.kz"},
+    {c:"KZ", name:"Международный университет им. Х.А. Ясави (Туркестан)", reqEnt:55, reqIelts:5.0, price:"Грант от 55 баллов ЕНТ · платное ~600 000 ₸/год", url:"https://ayu.edu.kz"},
+    {c:"RU", name:"МГЛУ", reqIelts:6.0, price:"Бюджетные места по ЕГЭ · платное ~300 000 ₽/год", url:"https://www.linguanet.ru"},
+    {c:"UK", name:"SOAS University of London", reqIelts:7.0, price:"~£20 000/год для иностранных студентов", url:"https://www.soas.ac.uk"},
+  ],
+};
+
+const COUNTRY = {
+  KZ:{n:"Казахстан", f:"🇰🇿"}, RU:{n:"Россия", f:"🇷🇺"}, US:{n:"США", f:"🇺🇸"},
+  UK:{n:"Великобритания", f:"🇬🇧"}, DE:{n:"Германия", f:"🇩🇪"}, TR:{n:"Турция", f:"🇹🇷"},
+};
+
+const LOADING_MESSAGES = [
+  {ru:"Читаю ответы теста Климова…", en:"Reading your Klimov test answers…", kz:"Климов тесті жауаптарын оқып жатырмын…"},
+  {ru:"Сопоставляю с профилем интересов…", en:"Matching with your interests profile…", kz:"Қызығушылық профиліңмен салыстырып жатырмын…"},
+  {ru:"Ищу подходящие типы профессий…", en:"Looking for matching profession types…", kz:"Сәйкес мамандық түрлерін іздеп жатырмын…"},
+  {ru:"Ранжирую по совпадению…", en:"Ranking by best match…", kz:"Сәйкестік бойынша реттеп жатырмын…"},
+  {ru:"Собираю подборку для тебя…", en:"Putting together your selection…", kz:"Саған арналған таңдауды жинап жатырмын…"},
+];
+
+const PLATFORM_OPTIONS = [
+  {k:"tiktok", l:"TikTok", l_en:"TikTok", l_kz:"TikTok"},
+  {k:"instagram", l:"Instagram / Reels", l_en:"Instagram / Reels", l_kz:"Instagram / Reels"},
+  {k:"youtube", l:"YouTube", l_en:"YouTube", l_kz:"YouTube"},
+  {k:"games", l:"Игры (ПК/консоль/телефон)", l_en:"Games (PC/console/phone)", l_kz:"Ойындар (ДК/консоль/телефон)"},
+  {k:"telegram", l:"Telegram / переписки", l_en:"Telegram / messaging", l_kz:"Telegram / хат-хабар"},
+  {k:"books", l:"Книги и чтение", l_en:"Books & reading", l_kz:"Кітап және оқу"},
+  {k:"offline", l:"Прогулки, спорт на улице", l_en:"Walks, outdoor sports", l_kz:"Серуендеу, далада спорт"},
+];
+
+const SUBJECTS_BY_FIELD = {
+  "IT": {ru:["Математика","Информатика","Английский язык"], en:["Math","Computer Science","English"], kz:["Математика","Информатика","Ағылшын тілі"]},
+  "Дизайн": {ru:["Рисунок и композиция","Английский язык","Основы дизайна"], en:["Drawing & Composition","English","Design Basics"], kz:["Сурет және композиция","Ағылшын тілі","Дизайн негіздері"]},
+  "Медицина": {ru:["Биология","Химия","Английский язык"], en:["Biology","Chemistry","English"], kz:["Биология","Химия","Ағылшын тілі"]},
+  "Ветеринария": {ru:["Биология","Химия"], en:["Biology","Chemistry"], kz:["Биология","Химия"]},
+  "Инженерия": {ru:["Математика","Физика"], en:["Math","Physics"], kz:["Математика","Физика"]},
+  "Архитектура": {ru:["Математика","Рисунок","Черчение"], en:["Math","Drawing","Technical Drawing"], kz:["Математика","Сурет","Сызу"]},
+  "Право": {ru:["История","Обществознание","Английский язык"], en:["History","Social Studies","English"], kz:["Тарих","Құқықтану","Ағылшын тілі"]},
+  "Психология и педагогика": {ru:["Обществознание","Биология"], en:["Social Studies","Biology"], kz:["Құқықтану","Биология"]},
+  "Бизнес и экономика": {ru:["Математика","Обществознание","Английский язык"], en:["Math","Social Studies","English"], kz:["Математика","Құқықтану","Ағылшын тілі"]},
+  "Наука": {ru:["Математика","Физика/Химия/Биология (по профилю)"], en:["Math","Physics/Chemistry/Biology (by track)"], kz:["Математика","Физика/Химия/Биология (бағыты бойынша)"]},
+  "Журналистика и медиа": {ru:["Русский/родной язык","Обществознание","Английский язык"], en:["Native Language","Social Studies","English"], kz:["Ана тілі","Құқықтану","Ағылшын тілі"]},
+  "Спорт и физическая культура": {ru:["Биология","Физическая культура"], en:["Biology","Physical Education"], kz:["Биология","Дене шынықтыру"]},
+  "Кулинария и гостеприимство": {ru:["Химия","Английский язык"], en:["Chemistry","English"], kz:["Химия","Ағылшын тілі"]},
+  "Авиация": {ru:["Физика","Математика","Английский язык"], en:["Physics","Math","English"], kz:["Физика","Математика","Ағылшын тілі"]},
+  "Лингвистика": {ru:["Английский язык","Родной язык"], en:["English","Native Language"], kz:["Ағылшын тілі","Ана тілі"]},
+};
+function subjectsFor(field){
+  const e = SUBJECTS_BY_FIELD[field];
+  if(!e) return [t("planScheduleTitle")];
+  return e[S.lang] || e.ru;
+}
+
+const TRIAL_TASKS = {
+  "IT": {
+    day:"Обычный день программиста: созвон с командой, разбор задач, написание кода, ревью коллег — и почти всегда охота за опечаткой, которая всё сломала.",
+    questions:[
+      {
+        task:"В этой функции есть баг — она должна складывать только чётные числа массива, но не работает:\n\nfunction sumEven(arr) {\n  let sum = 0;\n  for (let i=0; i<arr.length; i++) {\n    if (arr[i] % 2 = 0) sum += arr[i];\n  }\n  return sum;\n}\n\nВ чём проблема?",
+        opts:[
+          {t:"Нужно писать `=== 0`, а не `= 0` — это сравнение, а не присваивание", correct:true},
+          {t:"Нужно использовать `while` вместо `for`", correct:false},
+          {t:"Переменную `sum` нужно объявлять внутри цикла", correct:false},
+          {t:"Ошибки нет, всё верно", correct:false},
+        ]
+      },
+      {
+        task:"Сайт компании стал загружаться очень медленно. С чего начать разбираться?",
+        opts:[
+          {t:"Проверить, какие файлы (картинки, скрипты) самые тяжёлые, и оптимизировать их", correct:true},
+          {t:"Сразу переписать весь сайт с нуля", correct:false},
+          {t:"Добавить больше рекламных баннеров", correct:false},
+          {t:"Сменить название сайта", correct:false},
+        ]
+      },
+    ],
+  },
+  "Дизайн": {
+    day:"День дизайнера: эскизы интерфейса, обсуждение с разработчиками, тесты на реальных людях — и постоянный поиск баланса между красотой и удобством.",
+    questions:[
+      {
+        task:"В приложении кнопка «Купить» почти не видна на фоне — сливается с остальным экраном. Что исправить в первую очередь?",
+        opts:[
+          {t:"Увеличить контраст цвета кнопки относительно фона", correct:true},
+          {t:"Сделать шрифт на кнопке курсивом", correct:false},
+          {t:"Убрать кнопку совсем", correct:false},
+          {t:"Добавить больше текста рядом", correct:false},
+        ]
+      },
+      {
+        task:"Пользователи жалуются, что не понимают, куда нажать дальше в приложении. Что сделать?",
+        opts:[
+          {t:"Провести юзабилити-тест и посмотреть, где люди реально теряются", correct:true},
+          {t:"Добавить ещё больше ярких цветов на экран", correct:false},
+          {t:"Убрать всю навигацию совсем", correct:false},
+          {t:"Просто увеличить логотип компании", correct:false},
+        ]
+      },
+    ],
+  },
+  "Медицина": {
+    day:"День врача: приём пациентов каждые 15–20 минут, назначение анализов, консультации — и иногда экстренные случаи, которые меняют весь график.",
+    questions:[
+      {
+        task:"К тебе пришёл пациент: температура 37.8°C, боль в горле, увеличены лимфоузлы, кашля нет. Что вероятнее всего?",
+        opts:[
+          {t:"Ангина (тонзиллит)", correct:true},
+          {t:"Перелом руки", correct:false},
+          {t:"Аллергическая сыпь", correct:false},
+          {t:"Растяжение связок", correct:false},
+        ]
+      },
+      {
+        task:"Пациент жалуется на резкую боль в животе справа внизу. Что заподозрить в первую очередь?",
+        opts:[
+          {t:"Аппендицит", correct:true},
+          {t:"Мигрень", correct:false},
+          {t:"Растяжение мышцы шеи", correct:false},
+          {t:"Обычную простуду", correct:false},
+        ]
+      },
+    ],
+  },
+  "Ветеринария": {
+    day:"День ветеринара: осмотры, прививки, иногда операции — и хозяева питомцев, которым тоже нужно всё спокойно объяснить.",
+    questions:[
+      {
+        task:"Собака хромает после прогулки, лапа слегка припухла, но собака бодрая и ест как обычно. Что вероятнее?",
+        opts:[
+          {t:"Лёгкое растяжение или ушиб лапы", correct:true},
+          {t:"Перелом позвоночника", correct:false},
+          {t:"Инфекционное заболевание", correct:false},
+          {t:"Проблема со зрением", correct:false},
+        ]
+      },
+      {
+        task:"Кот отказывается от еды второй день подряд и стал вялым. Что делать?",
+        opts:[
+          {t:"Показать ветеринару как можно скорее — это тревожный сигнал", correct:true},
+          {t:"Подождать ещё неделю, само пройдёт", correct:false},
+          {t:"Просто дать больше сладкого", correct:false},
+          {t:"Ничего, кошки часто так делают", correct:false},
+        ]
+      },
+    ],
+  },
+  "Инженерия": {
+    day:"День инженера: чертежи, расчёты, тестирование прототипов — и поиск причины, почему что-то работает не так, как задумано.",
+    questions:[
+      {
+        task:"Деталь в механизме сильно нагревается во время работы, хотя раньше такого не было. Что проверить в первую очередь?",
+        opts:[
+          {t:"Трение и смазку в узле", correct:true},
+          {t:"Цвет корпуса детали", correct:false},
+          {t:"Название модели на этикетке", correct:false},
+          {t:"Громкость звука мотора", correct:false},
+        ]
+      },
+      {
+        task:"Новый мост должен выдерживать вес гружёных фур. Что рассчитывают в первую очередь?",
+        opts:[
+          {t:"Максимальную нагрузку и запас прочности конструкции", correct:true},
+          {t:"Цвет покраски моста", correct:false},
+          {t:"Количество фонарей на мосту", correct:false},
+          {t:"Название моста", correct:false},
+        ]
+      },
+    ],
+  },
+  "Архитектура": {
+    day:"День архитектора: эскизы, встречи с заказчиком, согласование с инженерами — и постоянный поиск баланса между красотой и нормами строительства.",
+    questions:[
+      {
+        task:"Нужно спроектировать небольшую городскую библиотеку на компактном участке. Что в приоритете на этапе эскиза?",
+        opts:[
+          {t:"Естественное освещение и зонирование пространства", correct:true},
+          {t:"Цвет фасада", correct:false},
+          {t:"Название здания", correct:false},
+          {t:"Марка кофемашины в холле", correct:false},
+        ]
+      },
+      {
+        task:"Заказчик хочет много больших окон, но здание строится в очень жарком климате. Как быть?",
+        opts:[
+          {t:"Продумать затенение и вентиляцию, сохранив естественный свет", correct:true},
+          {t:"Полностью убрать все окна", correct:false},
+          {t:"Просто проигнорировать климат", correct:false},
+          {t:"Сделать все окна чёрными непрозрачными", correct:false},
+        ]
+      },
+    ],
+  },
+  "Право": {
+    day:"День юриста: изучение документов, переговоры, подготовка позиций — и умение объяснить сложные законы простым языком.",
+    questions:[
+      {
+        task:"У клиента спор с работодателем о невыплаченной премии. Что нужно сделать в первую очередь?",
+        opts:[
+          {t:"Изучить трудовой договор и внутренние документы компании", correct:true},
+          {t:"Сразу подавать в суд", correct:false},
+          {t:"Посоветовать уволиться", correct:false},
+          {t:"Ничего не делать, само решится", correct:false},
+        ]
+      },
+      {
+        task:"Клиент просит составить договор аренды квартиры. Что обязательно нужно включить?",
+        opts:[
+          {t:"Срок аренды, сумму, порядок оплаты и ответственность сторон", correct:true},
+          {t:"Список любимых фильмов сторон", correct:false},
+          {t:"Только адрес квартиры", correct:false},
+          {t:"Ничего, устной договорённости достаточно", correct:false},
+        ]
+      },
+    ],
+  },
+  "Психология и педагогика": {
+    day:"День психолога/педагога: беседы, наблюдение, поддержка — и умение услышать то, что не сказано напрямую.",
+    questions:[
+      {
+        task:"Ученик перестал сдавать домашку и стал более замкнутым, чем обычно. Какой первый шаг?",
+        opts:[
+          {t:"Поговорить один на один и спокойно узнать, что происходит", correct:true},
+          {t:"Сразу поставить двойку при всём классе", correct:false},
+          {t:"Игнорировать, само пройдёт", correct:false},
+          {t:"Публично отчитать перед родителями", correct:false},
+        ]
+      },
+      {
+        task:"Клиент на консультации психолога плачет и не может говорить. Что делать?",
+        opts:[
+          {t:"Дать время и пространство, не торопить с разговором", correct:true},
+          {t:"Сразу сменить тему на что-то позитивное", correct:false},
+          {t:"Сказать «перестань плакать»", correct:false},
+          {t:"Закончить сессию раньше времени", correct:false},
+        ]
+      },
+    ],
+  },
+  "Бизнес и экономика": {
+    day:"День в бизнесе: встречи, анализ цифр, переговоры — и постоянные решения в условиях неполной информации.",
+    questions:[
+      {
+        task:"Стартап тратит больше денег, чем зарабатывает уже три месяца подряд. Что проверить в первую очередь?",
+        opts:[
+          {t:"Юнит-экономику: сколько стоит привлечь клиента и сколько он приносит", correct:true},
+          {t:"Логотип компании", correct:false},
+          {t:"Цвет офиса", correct:false},
+          {t:"Название продукта", correct:false},
+        ]
+      },
+      {
+        task:"Конкурент резко снизил цены вдвое. Что проверить перед тем, как реагировать?",
+        opts:[
+          {t:"Свою маржу и то, что клиенты ценят кроме цены", correct:true},
+          {t:"Сразу снизить цены втрое", correct:false},
+          {t:"Закрыть бизнес", correct:false},
+          {t:"Полностью скопировать всё, что делает конкурент", correct:false},
+        ]
+      },
+    ],
+  },
+  "Наука": {
+    day:"День исследователя: эксперименты, анализ данных, чтение научных статей — и терпение, ведь большинство гипотез не подтверждается с первого раза.",
+    questions:[
+      {
+        task:"Эксперимент дал результат, которого никто не ожидал. Что делать в первую очередь?",
+        opts:[
+          {t:"Проверить методику на ошибки и повторить эксперимент", correct:true},
+          {t:"Сразу опубликовать сенсацию в соцсетях", correct:false},
+          {t:"Забыть про результат", correct:false},
+          {t:"Изменить данные, чтобы совпадало с ожиданиями", correct:false},
+        ]
+      },
+      {
+        task:"Нужно доказать, что новое лекарство действительно работает. Что обязательно должно быть в исследовании?",
+        opts:[
+          {t:"Контрольная группа для сравнения результатов", correct:true},
+          {t:"Красивая презентация", correct:false},
+          {t:"Мнение одного пациента", correct:false},
+          {t:"Побольше рекламы", correct:false},
+        ]
+      },
+    ],
+  },
+  "Журналистика и медиа": {
+    day:"День журналиста: поиск источников, интервью, проверка фактов — и дедлайны, которые никого не ждут.",
+    questions:[
+      {
+        task:"Ты получил информацию от анонимного источника. Что сделать перед публикацией?",
+        opts:[
+          {t:"Проверить факты минимум по двум независимым источникам", correct:true},
+          {t:"Опубликовать сразу, пока никто не опередил", correct:false},
+          {t:"Добавить от себя драматичные подробности", correct:false},
+          {t:"Спросить мнение подписчиков в сторис", correct:false},
+        ]
+      },
+      {
+        task:"Ты пишешь статью о компании, но у тебя есть только её собственные заявления. Чего не хватает материалу?",
+        opts:[
+          {t:"Независимого мнения или комментария другой стороны", correct:true},
+          {t:"Больше красивых фото", correct:false},
+          {t:"Ярких эпитетов", correct:false},
+          {t:"Заголовка покрупнее", correct:false},
+        ]
+      },
+    ],
+  },
+  "Спорт и физическая культура": {
+    day:"День тренера: тренировки, разбор техники, забота о восстановлении спортсменов — и умение видеть, когда пора притормозить.",
+    questions:[
+      {
+        task:"Спортсмен жалуется на сильную усталость перед важным соревнованием. Что сделать?",
+        opts:[
+          {t:"Пересмотреть план нагрузки и дать время на восстановление", correct:true},
+          {t:"Увеличить тренировки в два раза", correct:false},
+          {t:"Проигнорировать жалобу", correct:false},
+          {t:"Отменить участие в спорте навсегда", correct:false},
+        ]
+      },
+      {
+        task:"У бегуна перед стартом начали болеть колени. Что делать тренеру?",
+        opts:[
+          {t:"Проверить технику бега и снизить нагрузку до консультации с врачом", correct:true},
+          {t:"Заставить бежать через боль", correct:false},
+          {t:"Полностью проигнорировать жалобу", correct:false},
+          {t:"Увеличить дистанцию тренировки", correct:false},
+        ]
+      },
+    ],
+  },
+  "Кулинария и гостеприимство": {
+    day:"День шеф-повара: планирование меню, контроль качества, работа на кухне под давлением времени — и постоянные эксперименты со вкусом.",
+    questions:[
+      {
+        task:"Блюдо на дегустации получилось слишком солёным. Что делать?",
+        opts:[
+          {t:"Добавить нейтральный компонент и скорректировать рецепт на будущее", correct:true},
+          {t:"Подать как есть, никто не заметит", correct:false},
+          {t:"Полностью выбросить блюдо и не разбираться в причине", correct:false},
+          {t:"Добавить ещё соли для симметрии", correct:false},
+        ]
+      },
+      {
+        task:"Гость ресторана предупредил об аллергии на орехи. Что сделать перед подачей блюда?",
+        opts:[
+          {t:"Проверить состав всех ингредиентов и уточнить у поставщиков", correct:true},
+          {t:"Просто убрать орехи с тарелки сверху", correct:false},
+          {t:"Ничего, скорее всего не страшно", correct:false},
+          {t:"Сказать, что орехов точно нет, не проверяя", correct:false},
+        ]
+      },
+    ],
+  },
+  "Авиация": {
+    day:"День пилота: предполётная проверка, инструктаж экипажа, полёт по строгим процедурам — и безопасность как абсолютный приоритет.",
+    questions:[
+      {
+        task:"Перед вылетом один из приборов показывает нестандартные данные. Что делать?",
+        opts:[
+          {t:"Не взлетать, пока неисправность не устранена и не подтверждена безопасность", correct:true},
+          {t:"Взлететь и разобраться в воздухе", correct:false},
+          {t:"Игнорировать показания прибора", correct:false},
+          {t:"Спросить пассажиров, что они думают", correct:false},
+        ]
+      },
+      {
+        task:"Во время полёта пассажиру стало плохо. Первые действия экипажа?",
+        opts:[
+          {t:"Оценить состояние, оказать первую помощь и при необходимости решить о посадке", correct:true},
+          {t:"Проигнорировать до конца полёта", correct:false},
+          {t:"Попросить других пассажиров решить по громкой связи", correct:false},
+          {t:"Ничего не делать", correct:false},
+        ]
+      },
+    ],
+  },
+  "Лингвистика": {
+    day:"День переводчика/лингвиста: работа с текстами, поиск точных формулировок — и постоянный выбор между точностью и естественностью звучания.",
+    questions:[
+      {
+        task:"Нужно перевести фразу с игрой слов на другой язык, где такой игры слов нет. Что важнее?",
+        opts:[
+          {t:"Передать смысл и настроение, а не переводить дословно", correct:true},
+          {t:"Перевести слово в слово, даже если теряется смысл", correct:false},
+          {t:"Пропустить фразу целиком", correct:false},
+          {t:"Оставить на языке оригинала без перевода", correct:false},
+        ]
+      },
+      {
+        task:"Клиент просит перевести юридический документ. Что важнее всего?",
+        opts:[
+          {t:"Точность терминов и соответствие юридическому смыслу", correct:true},
+          {t:"Красивый литературный слог", correct:false},
+          {t:"Скорость важнее точности", correct:false},
+          {t:"Можно перевести автоматически без проверки", correct:false},
+        ]
+      },
+    ],
+  },
+};
+
+/* ============ СОСТОЯНИЕ ============ */
+
+const S = {
+  step:"welcome",
+  lang:"ru",
+  age:"", home:"KZ", target:"KZ",
+  scoreEnt:"", scoreIelts:"", scoreSat:"",
+  klimovIdx:0, klimov:[],
+  riasec:{},
+  tags:[],
+  platforms:[], prepHours:"",
+  results:[],
+  chosen:null,
+  loadingMsgIdx:0,
+  trialFor:null, trialQuestions:[], trialQIdx:0, trialAnswers:[], trialFeedback:null,
+};
+
+const PATH_STEPS = [
+  ["onboarding","stepAnketa"],["klimov","stepKlimov"],["riasec","stepRiasec"],
+  ["interests","stepInterests"],["habits","stepHabits"],["loading","stepAnalysis"],["results","stepProfessions"],
+];
+
+/* ============ РЕНДЕР ============ */
+
+const app = document.getElementById("app");
+
+function render(){
+  window.scrollTo({top:0, behavior:"instant" in window ? "instant":"auto"});
+  if(S.step==="welcome") return renderWelcome();
+  if(S.step==="onboarding") return renderOnboarding();
+  if(S.step==="klimov") return renderKlimov();
+  if(S.step==="riasec") return renderRiasec();
+  if(S.step==="interests") return renderInterests();
+  if(S.step==="habits") return renderHabits();
+  if(S.step==="loading") return renderLoading();
+  if(S.step==="results") return renderResults();
+  if(S.step==="trial") return renderTrial();
+  if(S.step==="universities") return renderUniversities();
+  if(S.step==="prepPlan") return renderPrepPlan();
+}
+
+function progressHTML(){
+  const idx = PATH_STEPS.findIndex(s=>s[0]===S.step);
+  const pct = idx<=0 ? 0 : (idx/(PATH_STEPS.length-1))*100;
+  return `
+  <div class="path-wrap">
+    <div class="path">
+      <div class="path-fill" style="width:${pct}%"></div>
+      ${PATH_STEPS.map((s,i)=>`
+        <div class="node ${i<idx?'done':''} ${i===idx?'active':''}">
+          <div class="node-dot"></div>
+          <div class="node-label">${t(s[1])}</div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+/* ---- welcome ---- */
+function renderWelcome(){
+  app.innerHTML = `
+    <div class="hero">
+      <div class="kicker">${t("kicker")}</div>
+      <h1>${t("heroTitleHtml")}</h1>
+      <p class="hero-sub">${t("heroSub")}</p>
+
+      <div class="hero-steps">
+        <div class="hero-step"><div class="hero-step-num">01</div><div class="hero-step-text"><b>${t("step1Title")}</b><span>${t("step1Desc")}</span></div></div>
+        <div class="hero-step"><div class="hero-step-num">02</div><div class="hero-step-text"><b>${t("step2Title")}</b><span>${t("step2Desc")}</span></div></div>
+        <div class="hero-step"><div class="hero-step-num">03</div><div class="hero-step-text"><b>${t("step3Title")}</b><span>${t("step3Desc")}</span></div></div>
+        <div class="hero-step"><div class="hero-step-num">04</div><div class="hero-step-text"><b>${t("step4Title")}</b><span>${t("step4Desc")}</span></div></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goStep('onboarding')">${t("heroBtn")}</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ---- onboarding ---- */
+function renderOnboarding(){
+  app.innerHTML = `
+    ${progressHTML()}
+    <div class="card">
+      <h2 class="step-title">${t("onbTitle")}</h2>
+      <p class="step-hint">${t("onbHint")}</p>
+
+      <div class="field">
+        <label>${t("ageLabel")}</label>
+        <input type="number" id="f-age" min="12" max="19" placeholder="${t("agePlaceholder")}" value="${S.age}">
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>${t("homeLabel")}</label>
+          <select id="f-home">${countryOptions(S.home)}</select>
+        </div>
+        <div class="field">
+          <label>${t("targetLabel")}</label>
+          <select id="f-target">${countryOptions(S.target)}</select>
+        </div>
+      </div>
+
+      <div class="fieldset-title">${t("scoresTitle")} <span class="opt">${t("scoresOpt")}</span></div>
+      <div class="fieldset-hint">${t("scoresHint")}</div>
+      <div class="grid-3">
+        <div class="field">
+          <label>${t("entLabel")} <span class="opt">${t("entOpt")}</span></label>
+          <input type="number" id="f-ent" min="0" max="140" placeholder="—" value="${S.scoreEnt}">
+        </div>
+        <div class="field">
+          <label>${t("ieltsLabel")} <span class="opt">${t("ieltsOpt")}</span></label>
+          <input type="number" step="0.5" id="f-ielts" min="0" max="9" placeholder="—" value="${S.scoreIelts}">
+        </div>
+        <div class="field">
+          <label>${t("satLabel")} <span class="opt">${t("satOpt")}</span></label>
+          <input type="number" id="f-sat" min="400" max="1600" placeholder="—" value="${S.scoreSat}">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary btn-block" onclick="submitOnboarding()">${t("onbBtn")}</button>
+      </div>
+    </div>
+  `;
+}
+function countryOptions(sel){
+  return Object.keys(COUNTRY).map(c=>`<option value="${c}" ${c===sel?'selected':''}>${COUNTRY[c].f} ${COUNTRY[c].n}</option>`).join("")
+    + `<option value="ANY" ${sel==="ANY"?'selected':''}>${t("countryUndecided")}</option>`;
+}
+function submitOnboarding(){
+  S.age = document.getElementById("f-age").value;
+  S.home = document.getElementById("f-home").value;
+  S.target = document.getElementById("f-target").value;
+  S.scoreEnt = document.getElementById("f-ent").value;
+  S.scoreIelts = document.getElementById("f-ielts").value;
+  S.scoreSat = document.getElementById("f-sat").value;
+  goStep("klimov");
+}
+
+/* ---- klimov ---- */
+function renderKlimov(){
+  const i = S.klimovIdx;
+  const item = KLIMOV_QUESTIONS[i];
+  app.innerHTML = `
+    ${progressHTML()}
+    <div class="card">
+      <div class="q-counter">Вопрос ${i+1} из ${KLIMOV_QUESTIONS.length} · Тест Климова</div>
+      <h2 class="step-title">${item.q}</h2>
+      <p class="q-lead">Выбери вариант, который ближе всего тебе по духу.</p>
+      <div class="pair">
+        ${item.opts.map(o=>`<button class="opt-card" onclick="pickKlimov('${o.k}')">${o.t}</button>`).join("")}
+      </div>
+      ${i>0 ? `<div class="btn-row"><button class="back-link" onclick="goBackKlimov()">← Назад, я ошибся(лась)</button></div>` : ""}
+    </div>
+  `;
+}
+function pickKlimov(type){
+  S.klimov.push(type);
+  if(S.klimovIdx < KLIMOV_QUESTIONS.length-1){
+    S.klimovIdx++;
+    renderKlimov();
+  } else {
+    goStep("riasec");
+  }
+}
+function goBackKlimov(){
+  if(S.klimovIdx>0){
+    S.klimov.pop();
+    S.klimovIdx--;
+    renderKlimov();
+  }
+}
+
+/* ---- riasec ---- */
+function renderRiasec(){
+  const answered = Object.keys(S.riasec).length;
+  app.innerHTML = `
+    ${progressHTML()}
+    <div class="card">
+      <h2 class="step-title">Насколько это про тебя?</h2>
+      <p class="step-hint">Короткий тест по методике RIASEC. Отметь для каждой фразы — от «совсем не про меня» до «точно про меня».</p>
+      <div>
+        ${RIASEC_ITEMS.map((it,i)=>`
+          <div class="riasec-item">
+            <div class="riasec-text">${it.t}</div>
+            <div class="scale">
+              ${[1,2,3,4,5].map(v=>`<button class="${S.riasec[i]===v?'picked':''}" onclick="pickRiasec(${i},${v})">${v}</button>`).join("")}
+            </div>
+            <div class="scale-labels"><span>совсем не про меня</span><span>точно про меня</span></div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-block" ${answered<RIASEC_ITEMS.length?'disabled':''} onclick="goStep('interests')">
+          ${answered<RIASEC_ITEMS.length ? `Отвечено ${answered} из ${RIASEC_ITEMS.length}` : 'Дальше — интересы →'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+function pickRiasec(i,v){
+  S.riasec[i]=v;
+  renderRiasec();
+}
+
+/* ---- interests ---- */
+function renderInterests(){
+  app.innerHTML = `
+    ${progressHTML()}
+    <div class="card">
+      <h2 class="step-title">Что тебе интересно?</h2>
+      <p class="step-hint">Выбери минимум 3 направления — можно больше.</p>
+      <div class="tag-grid">
+        ${TAGS.map(tg=>`<button class="tag ${S.tags.includes(tg.k)?'picked':''}" onclick="toggleTag('${tg.k}')">${tg.l}</button>`).join("")}
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-block" ${S.tags.length<3?'disabled':''} onclick="goStep('habits')">
+          ${S.tags.length<3 ? `Выбери ещё ${3-S.tags.length}` : 'Дальше →'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+function toggleTag(k){
+  const i = S.tags.indexOf(k);
+  if(i>-1) S.tags.splice(i,1); else S.tags.push(k);
+  renderInterests();
+}
+
+/* ---- habits ---- */
+function renderHabits(){
+  app.innerHTML = `
+    ${progressHTML()}
+    <div class="card">
+      <h2 class="step-title">Где ты обычно проводишь время?</h2>
+      <p class="step-hint">Выбери минимум 2 варианта — это поможет ИИ позже составить план подготовки в формате, который тебе реально удобен.</p>
+      <div class="tag-grid">
+        ${PLATFORM_OPTIONS.map(p=>`<button class="tag ${S.platforms.includes(p.k)?'picked':''}" onclick="pickPlatform('${p.k}')">${p.l}</button>`).join("")}
+      </div>
+      <div class="field" style="margin-top:24px;">
+        <label>Сколько часов в день готов(а) уделять подготовке? <span class="opt">(необязательно)</span></label>
+        <input type="number" id="f-hours" min="0" max="12" step="0.5" placeholder="Например, 1.5" value="${S.prepHours}">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-block" ${S.platforms.length<2?'disabled':''} onclick="submitHabits()">
+          ${S.platforms.length<2 ? `Выбери ещё ${2-S.platforms.length}` : 'Готово — запустить ИИ-анализ →'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+function pickPlatform(k){
+  const i = S.platforms.indexOf(k);
+  if(i>-1) S.platforms.splice(i,1); else S.platforms.push(k);
+  renderHabits();
+}
+function submitHabits(){
+  S.prepHours = document.getElementById("f-hours").value;
+  startLoading();
+}
+
+/* ---- loading ---- */
+function startLoading(){
+  S.loadingMsgIdx = 0;
+  goStep("loading");
+  const interval = setInterval(()=>{
+    S.loadingMsgIdx++;
+    if(S.loadingMsgIdx >= LOADING_MESSAGES.length){
+      clearInterval(interval);
+      computeResults();
+      goStep("results");
+      return;
+    }
+    renderLoading();
+  }, 650);
+}
+function renderLoading(){
+  app.innerHTML = `
+    ${progressHTML()}
+    <div class="loading-wrap">
+      <div class="spinner"></div>
+      <div class="loading-msg">${LOADING_MESSAGES[Math.min(S.loadingMsgIdx, LOADING_MESSAGES.length-1)]}</div>
+    </div>
+  `;
+}
+
+/* ---- scoring ---- */
+function computeResults(){
+  const klimovCount = {};
+  S.klimov.forEach(k=>klimovCount[k]=(klimovCount[k]||0)+1);
+  const sortedKlimov = Object.keys(klimovCount).sort((a,b)=>klimovCount[b]-klimovCount[a]);
+  const top1 = sortedKlimov[0], top2 = sortedKlimov[1];
+
+  const riasecAvg = {};
+  ["R","I","A","S","E","C"].forEach(letter=>{
+    const idxs = RIASEC_ITEMS.map((it,i)=>it.k===letter?i:-1).filter(i=>i>-1);
+    const vals = idxs.map(i=>S.riasec[i]||3);
+    riasecAvg[letter] = vals.reduce((a,b)=>a+b,0)/vals.length;
+  });
+
+  const scored = PROFESSIONS.map(p=>{
+    let score = 0;
+    if(p.klimov===top1) score += 10;
+    else if(p.klimov===top2) score += 5;
+    p.riasec.forEach(letter=>{ score += riasecAvg[letter]*2.2; });
+    const overlap = p.tags.filter(t=>S.tags.includes(t)).length;
+    score += overlap*7;
+    return {...p, score};
+  });
+
+  const maxScore = Math.max(...scored.map(s=>s.score));
+  scored.forEach(s=>{ s.match = Math.round(Math.min(97, 55 + (s.score/maxScore)*42)); });
+  scored.sort((a,b)=>b.score-a.score);
+  S.results = scored.slice(0,6);
+}
+
+/* ---- results ---- */
+function renderResults(){
+  app.innerHTML = `
+    ${progressHTML()}
+    <h2 class="step-title" style="margin-bottom:4px;">Похоже, тебе подойдёт одно из этого</h2>
+    <p class="step-hint">Подборка на основе теста Климова, RIASEC и твоих интересов. Попробуй профессию на практике или сразу переходи к вузам.</p>
+    <div>
+      ${S.results.map(r=>`
+        <div class="result-card">
+          <div class="result-top">
+            <div>
+              <div class="result-name">${r.name}</div>
+              <div class="result-field">${r.field} · ${KLIMOV_LABEL[r.klimov]}</div>
+            </div>
+            <div class="match-badge">${r.match}% совпадение</div>
+          </div>
+          <div class="result-desc">${r.desc}</div>
+          <div class="result-tags">${r.tags.map(t=>`<span class="mini-tag">${TAGS.find(x=>x.k===t).l}</span>`).join("")}</div>
+          <div class="result-actions">
+            <button class="btn btn-ghost" onclick="startTrial('${r.id}')">🎯 Попробовать профессию</button>
+            <button class="btn btn-ghost" onclick="chooseProfession('${r.id}')">Выбрать эту профессию →</button>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+    <div class="footnote">Это демо-версия: профессии подбираются по упрощённой модели прямо в браузере, без реального ИИ-сервиса. В полной версии здесь будет более глубокий анализ на базе языковой модели.</div>
+  `;
+}
+function chooseProfession(id){
+  S.chosen = PROFESSIONS.find(p=>p.id===id);
+  goStep("universities");
+}
+
+/* ---- trial: проба профессии ---- */
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i=a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function startTrial(id){
+  S.trialFor = id;
+  const p = PROFESSIONS.find(x=>x.id===id);
+  const task = TRIAL_TASKS[p.field];
+  S.trialQuestions = shuffleArray(task.questions).map(q=>({
+    task: q.task,
+    opts: shuffleArray(q.opts),
+  }));
+  S.trialQIdx = 0;
+  S.trialAnswers = [];
+  S.trialFeedback = null;
+  goStep("trial");
+}
+function pickTrialOption(idx){
+  const q = S.trialQuestions[S.trialQIdx];
+  S.trialAnswers.push(q.opts[idx].correct);
+  S.trialQIdx++;
+  renderTrial();
+}
+function setTrialFeedback(val){
+  S.trialFeedback = val;
+  renderTrial();
+}
+function renderTrial(){
+  const p = PROFESSIONS.find(x=>x.id===S.trialFor);
+  const task = TRIAL_TASKS[p.field];
+
+  if(S.trialQIdx < S.trialQuestions.length){
+    const q = S.trialQuestions[S.trialQIdx];
+    app.innerHTML = `
+      <button class="back-link" onclick="goStep('results')">← Назад к профессиям</button>
+      <div class="card">
+        <div class="q-counter">Проба профессии · Вопрос ${S.trialQIdx+1} из ${S.trialQuestions.length}</div>
+        <h2 class="step-title">${p.name}</h2>
+        <p class="q-lead" style="white-space:pre-line;">${q.task}</p>
+        <div class="pair">
+          ${q.opts.map((o,i)=>`<button class="opt-card" onclick="pickTrialOption(${i})">${o.t}</button>`).join("")}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const correctCount = S.trialAnswers.filter(Boolean).length;
+
+  if(S.trialFeedback===null){
+    app.innerHTML = `
+      <div class="card">
+        <div class="q-counter">Проба профессии · ${p.name}</div>
+        <h2 class="step-title">Верно ${correctCount} из ${S.trialQuestions.length}</h2>
+        <p class="step-hint">${correctCount===S.trialQuestions.length ? "Отлично — ты рассуждаешь так же, как рассуждают в этой профессии каждый день." : "Часть вопросов оказалась непростой — это нормально, в реальной работе тоже учатся на практике."}</p>
+        <div class="info-banner">${task.day}</div>
+        <div class="fieldset-title" style="border-top:none;padding-top:0;">Тебе понравилось это задание?</div>
+        <div class="btn-row" style="margin-top:14px;">
+          <button class="btn btn-ghost" onclick="setTrialFeedback('yes')">Да, было интересно</button>
+          <button class="btn btn-ghost" onclick="setTrialFeedback('meh')">Более-менее</button>
+          <button class="btn btn-ghost" onclick="setTrialFeedback('no')">Не моё</button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const fbText = S.trialFeedback==="yes" ? "Отлично — это хороший знак, что профессия тебе подходит."
+    : S.trialFeedback==="meh" ? "Окей, это нормально — не всё в профессии одинаково увлекательно."
+    : "Понял. Такое тоже важно знать до поступления, а не после первого курса.";
+
+  app.innerHTML = `
+    <div class="card">
+      <h2 class="step-title">Спасибо за пробу!</h2>
+      <p class="step-hint">${fbText} Мы учли это в твоём профиле.</p>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goStep('results')">← Вернуться к профессиям</button>
+        <button class="btn btn-primary" onclick="chooseProfession('${p.id}')">Выбрать эту профессию → вузы</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ---- universities ---- */
+function reqChip(label, req, userVal){
+  if(req===undefined) return "";
+  if(!userVal) return `<span class="req-chip req-na">${label}: минимум ~${req}</span>`;
+  const uv = parseFloat(userVal);
+  if(uv >= req) return `<span class="req-chip req-ok">${label} ✓ соответствует (нужно ~${req})</span>`;
+  if(uv >= req*0.88) return `<span class="req-chip req-warn">${label} ⚠ погранично (нужно ~${req})</span>`;
+  return `<span class="req-chip req-low">${label} ↑ стоит подтянуть (нужно ~${req})</span>`;
+}
+function renderUniversities(){
+  const p = S.chosen;
+  const unis = FIELD_UNIS[p.field] || [];
+  const target = unis.filter(u=>u.c===S.target);
+  const others = unis.filter(u=>u.c!==S.target);
+
+  function uniCard(u){
+    return `
+      <div class="uni-card">
+        <div class="uni-top">
+          <div>
+            <div class="uni-name"><span class="flag">${COUNTRY[u.c].f}</span>${u.name}</div>
+            <div class="uni-country">${COUNTRY[u.c].n} · направление «${p.field}»</div>
+          </div>
+        </div>
+        <div class="req-row">
+          ${reqChip("ЕНТ", u.reqEnt, S.scoreEnt)}
+          ${reqChip("IELTS", u.reqIelts, S.scoreIelts)}
+          ${reqChip("SAT", u.reqSat, S.scoreSat)}
+        </div>
+        ${u.price ? `<div class="uni-price">💰 ${u.price}</div>` : ""}
+        ${u.url ? `<a class="uni-link" href="${u.url}" target="_blank" rel="noopener noreferrer">Официальный сайт ↗</a>` : ""}
+      </div>`;
+  }
+
+  app.innerHTML = `
+    <button class="back-link" onclick="goStep('results')">← Назад к профессиям</button>
+    <div class="chosen-banner">
+      <div class="k">Твой выбор</div>
+      <h2>${p.name}</h2>
+      <p>${p.desc}</p>
+    </div>
+
+    ${target.length ? `<div class="uni-group-title">В стране, куда ты планируешь поступать — ${COUNTRY[S.target] ? COUNTRY[S.target].n : ''}</div>${target.map(uniCard).join("")}` : ""}
+    <div class="uni-group-title">${target.length ? "Другие сильные варианты" : "Университеты по направлению «"+p.field+"»"}</div>
+    ${others.map(uniCard).join("")}
+
+    <div class="footnote">Баллы и цены — примерные ориентиры для демо-версии, а не официальные данные вузов. Перед подачей документов всегда сверяйся с актуальными требованиями на сайте университета.</div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goStep('results')">Выбрать другую профессию</button>
+      <button class="btn btn-primary" onclick="goStep('prepPlan')">📅 Составить план подготовки</button>
+    </div>
+    <div class="btn-row" style="margin-top:6px;">
+      <button class="back-link" onclick="restart()">↺ Начать заново</button>
+    </div>
+  `;
+}
+
+/* ---- prep plan: план подготовки ---- */
+function methodTextForPlatform(platform){
+  const map = {
+    tiktok: "смотри короткие видео-объяснения (10–15 минут) по теме, затем сразу закрепляй 5 практическими задачами",
+    instagram: "найди пару каналов/блогов по теме в Reels, разбей материал на карточки-заметки и повторяй их между делами",
+    youtube: "смотри один разбор темы на YouTube (15–20 минут) и сразу решай практику по нему",
+    games: "превращай повторение в игру — используй карточки в стиле Anki/Quizlet и соревнуйся сам с собой в счёте",
+    telegram: "подпишись на 2–3 канала по теме и веди короткий конспект в заметках телефона",
+    books: "читай главу учебника с конспектом, а затем перескажи материал своими словами вслух",
+    offline: "слушай аудио-объяснения или подкасты по теме во время прогулки или тренировки",
+  };
+  return map[platform] || "выбери формат объяснения, который тебе удобнее всего, и закрепляй практикой";
+}
+function renderPrepPlan(){
+  const p = S.chosen;
+  const subjects = SUBJECTS_BY_FIELD[p.field] || ["Профильные предметы"];
+  const platforms = S.platforms.length ? S.platforms : ["offline"];
+  const methods = platforms.map(k=>({
+    label: (PLATFORM_OPTIONS.find(x=>x.k===k)||{}).l || k,
+    text: methodTextForPlatform(k)
+  }));
+  const hours = S.prepHours ? `${S.prepHours} ч/день` : "20–40 минут в день";
+  const days = ["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
+
+  const schedule = days.map((d,i)=>{
+    const subject = subjects[i % subjects.length];
+    const method = methods[i % methods.length];
+    const isRest = i===6;
+    return {day:d, subject: isRest ? "Отдых / лёгкое повторение" : subject, method, rest:isRest};
+  });
+
+  app.innerHTML = `
+    <button class="back-link" onclick="goStep('universities')">← Назад к вузам</button>
+    <div class="chosen-banner">
+      <div class="k">План подготовки</div>
+      <h2>${p.name}</h2>
+      <p>Подстроено под то, что тебе удобно: ${hours}, форматы — ${methods.map(m=>m.label).join(", ")}.</p>
+    </div>
+
+    <div class="info-banner">Общий принцип: чередуем форматы, которые ты сам(а) выбрал(а), чтобы подготовка не превращалась в рутину — ${methods.map(m=>m.text).join("; ")}.</div>
+
+    <div class="uni-group-title">Расписание на неделю</div>
+    ${schedule.map(s=>`
+      <div class="uni-card">
+        <div class="uni-top">
+          <div>
+            <div class="uni-name">${s.day}</div>
+            <div class="uni-country">${s.subject}</div>
+          </div>
+        </div>
+        ${!s.rest ? `<div class="uni-price">🎯 ${s.method.label}: ${s.method.text}</div>` : `<div class="uni-price">🌿 Дай себе передышку — мозгу нужно время закрепить материал</div>`}
+      </div>
+    `).join("")}
+
+    <div class="footnote">Это шаблон плана для демо-версии. В полной версии ИИ будет подстраивать план каждую неделю под твой реальный прогресс и результаты пробных тестов.</div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goStep('universities')">Назад к вузам</button>
+      <button class="btn btn-primary" onclick="restart()">Начать заново</button>
+    </div>
+  `;
+}
+
+function restart(){
+  S.step="welcome"; S.age=""; S.home="KZ"; S.target="KZ";
+  S.scoreEnt=""; S.scoreIelts=""; S.scoreSat="";
+  S.klimovIdx=0; S.klimov=[]; S.riasec={}; S.tags=[];
+  S.platforms=[]; S.prepHours="";
+  S.results=[]; S.chosen=null;
+  S.trialFor=null; S.trialQuestions=[]; S.trialQIdx=0; S.trialAnswers=[]; S.trialFeedback=null;
+  render();
+}
+
+function goStep(step){ S.step=step; render(); }
+
+renderLangSwitch();
+render();
+</script>
+</body>
+</html>

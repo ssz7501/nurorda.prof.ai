@@ -471,6 +471,118 @@
     display:inline-flex;align-items:center;gap:6px;
   }
   .back-link:hover{color:var(--violet);}
+
+  /* ---------- auth ---------- */
+  .auth-wrap{max-width:420px; margin:0 auto;}
+  .auth-tabs{display:flex; gap:8px; margin-bottom:22px;}
+  .auth-tab{
+    flex:1; text-align:center; padding:10px; border-radius:100px;
+    font-weight:700; font-size:14px; color:var(--ink-soft);
+    background:var(--bg-soft); border:1.5px solid transparent;
+  }
+  .auth-tab.active{background:var(--violet-bg); color:var(--violet-dark); border-color:var(--violet);}
+  .oauth-btn{
+    width:100%; display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:13px; border-radius:100px; border:1.5px solid var(--border);
+    background:#fff; font-weight:600; font-size:14.5px; margin-bottom:10px;
+  }
+  .oauth-btn:hover{border-color:var(--violet);}
+  .oauth-btn[disabled]{opacity:.45; cursor:not-allowed;}
+  .auth-divider{
+    display:flex; align-items:center; gap:10px; margin:18px 0;
+    color:var(--ink-soft); font-size:12.5px;
+  }
+  .auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:var(--border);}
+  .auth-error{
+    background:var(--rose-bg); color:var(--rose); font-size:13.5px; font-weight:600;
+    padding:11px 14px; border-radius:var(--radius-s); margin-bottom:16px;
+  }
+  .auth-link-row{text-align:center; margin-top:16px; font-size:13.5px; color:var(--ink-soft);}
+  .auth-link-row button{background:none;border:none;color:var(--violet);font-weight:700;padding:0;}
+
+  /* ---------- account control (topbar) ---------- */
+  .acc-btn{
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface); border:1.5px solid var(--border); border-radius:100px;
+    padding:7px 13px 7px 7px; font-size:14px; font-weight:600;
+  }
+  .acc-avatar{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--violet); color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px; font-weight:700; flex-shrink:0;
+  }
+
+  /* ---------- dashboard layout ---------- */
+  .dash-wrap{display:flex; gap:26px; align-items:flex-start;}
+  .dash-nav{
+    width:190px; flex-shrink:0; display:flex; flex-direction:column; gap:3px;
+    position:sticky; top:20px;
+  }
+  .dash-nav button{
+    text-align:left; padding:10px 13px; border-radius:var(--radius-s);
+    font-size:14px; font-weight:600; color:var(--ink-soft); background:transparent;
+  }
+  .dash-nav button:hover{background:var(--bg-soft);}
+  .dash-nav button.active{background:var(--violet-bg); color:var(--violet-dark);}
+  .dash-main{flex:1; min-width:0;}
+  @media (max-width:680px){
+    .dash-wrap{flex-direction:column;}
+    .dash-nav{
+      position:static; width:100%; flex-direction:row; overflow-x:auto;
+      gap:6px; padding-bottom:6px; -webkit-overflow-scrolling:touch;
+    }
+    .dash-nav button{white-space:nowrap; flex-shrink:0;}
+  }
+
+  .dash-hello{font-size:26px; margin-bottom:4px;}
+  .progress-row{display:flex; align-items:center; gap:12px; margin:10px 0;}
+  .progress-row-label{width:150px; flex-shrink:0; font-size:13.5px; font-weight:600; color:var(--ink-soft);}
+  .progress-track{flex:1; height:9px; border-radius:100px; background:var(--bg-soft); overflow:hidden;}
+  .progress-fill{height:100%; background:var(--violet); border-radius:100px; transition:width .4s;}
+  .progress-pct{width:38px; text-align:right; font-size:12.5px; font-weight:700; color:var(--ink-soft);}
+
+  .dash-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px;}
+  @media (max-width:600px){.dash-grid{grid-template-columns:1fr;}}
+  .dash-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m);
+    padding:18px;
+  }
+  .dash-card-label{font-size:12.5px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; margin-bottom:8px;}
+  .dash-card-title{font-family:'Space Grotesk'; font-weight:600; font-size:18px; margin-bottom:10px;}
+  .dash-empty{color:var(--ink-soft); font-size:14px;}
+
+  .checklist-item{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-s);
+    margin-bottom:8px; background:var(--surface);
+  }
+  .checklist-item.done{opacity:.55;}
+  .checklist-item.done .checklist-text{text-decoration:line-through;}
+  .checklist-check{
+    width:22px;height:22px;border-radius:7px; border:1.5px solid var(--border);
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:14px;
+    background:#fff;
+  }
+  .checklist-check.on{background:var(--green); border-color:var(--green); color:#fff;}
+  .checklist-text{flex:1; font-size:14.5px;}
+  .checklist-sub{font-size:12.5px; color:var(--ink-soft);}
+
+  .deadline-item{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:13px 16px; border:1px solid var(--border); border-radius:var(--radius-m);
+    margin-bottom:9px; background:var(--surface);
+  }
+  .deadline-soon{border-color:var(--amber); background:var(--amber-bg);}
+  .deadline-del{background:none;border:none;color:var(--rose);font-size:13px;font-weight:700;}
+
+  .avatar-circle-lg{
+    width:52px;height:52px;border-radius:50%; background:var(--violet); color:#fff;
+    display:flex;align-items:center;justify-content:center; font-weight:700; font-size:20px;
+  }
+  .profile-head{display:flex; align-items:center; gap:14px; margin-bottom:22px;}
+  .mini-stat{font-size:13px; color:var(--ink-soft);}
+  .mini-stat b{color:var(--ink);}
 </style>
 </head>
 <body>
@@ -484,14 +596,153 @@
     </div>
     <span class="logo-text">Nur.Prof.AI</span>
   </div>
-  <div class="lang-switch" id="lang-switch">
-    <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)"></button>
+  <div class="topbar-right" style="display:flex; align-items:center; gap:8px;">
+    <div id="acc-switch"></div>
+    <div class="lang-switch" id="lang-switch">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)"></button>
+    </div>
   </div>
 </div>
 
 <div id="app"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+/* ============ SUPABASE CONFIG ============ */
+/* Замени эти два значения на свои из Supabase → Project Settings → API.
+   SUPABASE_ANON_KEY — публичный ключ, его можно хранить в коде на фронтенде:
+   доступ к данным всё равно ограничен политиками Row Level Security в базе. */
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_READY = SUPABASE_URL.startsWith("http") && SUPABASE_ANON_KEY && SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY";
+const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+/* ============ АККАУНТЫ ============ */
+
+async function initAuth(){
+  if(!sb){ renderAccountSwitch(); return; }
+  const { data } = await sb.auth.getSession();
+  if(data && data.session){
+    S.user = data.session.user;
+    await loadProfile();
+  }
+  renderAccountSwitch();
+  sb.auth.onAuthStateChange(async (event, session)=>{
+    S.user = session ? session.user : null;
+    if(S.user){ await loadProfile(); } else { S.profile = null; }
+    renderAccountSwitch();
+    if(S.step==="dashboard" || S.step==="auth") render();
+  });
+}
+
+async function loadProfile(){
+  if(!sb || !S.user) return;
+  const { data } = await sb.from("profiles").select("*").eq("id", S.user.id).maybeSingle();
+  S.profile = data || null;
+}
+
+function renderAccountSwitch(){
+  const el = document.getElementById("acc-switch");
+  if(!el) return;
+  if(!SUPABASE_READY){
+    el.innerHTML = `<button class="acc-btn" title="Supabase не подключён (см. README)" style="opacity:.5;cursor:default;">👤 Демо-режим</button>`;
+    return;
+  }
+  if(!S.user){
+    el.innerHTML = `<button class="acc-btn" onclick="goStep('auth')">👤 ${t("loginBtn")}</button>`;
+    return;
+  }
+  const initial = (S.profile && S.profile.full_name ? S.profile.full_name[0] : (S.user.email||"?")[0]).toUpperCase();
+  const name = S.profile && S.profile.full_name ? S.profile.full_name : S.user.email;
+  el.innerHTML = `<button class="acc-btn" onclick="goStep('dashboard')"><span class="acc-avatar">${initial}</span>${name.split(" ")[0]}</button>`;
+}
+
+async function signUp(email, password){
+  S.authError=""; S.authBusy=true; renderAuth();
+  const { data, error } = await sb.auth.signUp({ email, password });
+  S.authBusy=false;
+  if(error){ S.authError=error.message; renderAuth(); return; }
+  S.user = data.user;
+  goStep("profileSetup");
+}
+async function signIn(email, password){
+  S.authError=""; S.authBusy=true; renderAuth();
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  S.authBusy=false;
+  if(error){ S.authError=error.message; renderAuth(); return; }
+  S.user = data.user;
+  await loadProfile();
+  renderAccountSwitch();
+  goStep(S.profile ? "dashboard" : "profileSetup");
+}
+async function signInWithGoogle(){
+  await sb.auth.signInWithOAuth({ provider:"google", options:{ redirectTo: window.location.href } });
+}
+async function signInWithApple(){
+  await sb.auth.signInWithOAuth({ provider:"apple", options:{ redirectTo: window.location.href } });
+}
+async function sendPasswordReset(email){
+  S.authError=""; S.authBusy=true; renderAuth();
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
+  S.authBusy=false;
+  S.authError = error ? error.message : "__sent__";
+  renderAuth();
+}
+async function signOut(){
+  if(sb) await sb.auth.signOut();
+  S.user=null; S.profile=null;
+  renderAccountSwitch();
+  goStep("welcome");
+}
+
+/* ---- запись/чтение результатов в БД (выполняется только если есть сессия) ---- */
+async function dbSaveKlimovResult(topType, counts){
+  if(!sb || !S.user) return;
+  await sb.from("klimov_results").insert({ user_id:S.user.id, top_type:topType, counts });
+}
+async function dbSaveRiasecResult(scores){
+  if(!sb || !S.user) return;
+  await sb.from("riasec_results").insert({ user_id:S.user.id, scores });
+}
+async function dbSaveCareerAnalysis(analysis){
+  if(!sb || !S.user) return;
+  await sb.from("career_analysis").insert({ user_id:S.user.id, ...analysis });
+}
+async function dbUpsertSelectedCareer(professionId, isPrimary){
+  if(!sb || !S.user) return;
+  await sb.from("selected_careers").upsert({ user_id:S.user.id, profession_id:professionId, is_primary: !!isPrimary }, { onConflict:"user_id,profession_id" });
+}
+async function dbUpsertSavedUniversity(universityKey, universityName, field, country, isPrimary){
+  if(!sb || !S.user) return;
+  if(isPrimary){
+    await sb.from("saved_universities").update({ is_primary:false }).eq("user_id", S.user.id);
+  }
+  await sb.from("saved_universities").upsert({
+    user_id:S.user.id, university_key:universityKey, university_name:universityName,
+    field, country, is_primary: !!isPrimary,
+  }, { onConflict:"user_id,university_key" });
+}
+async function dbSaveExamScores(){
+  if(!sb || !S.user) return;
+  await sb.from("exam_scores").upsert({
+    user_id:S.user.id, ent:S.scoreEnt||null, ielts:S.scoreIelts||null, sat:S.scoreSat||null, toefl:S.scoreToefl||null,
+    updated_at:new Date().toISOString(),
+  }, { onConflict:"user_id" });
+}
+async function dbLoadDashboardData(){
+  if(!sb || !S.user) return;
+  const [careers, unis, tasks, deadlines] = await Promise.all([
+    sb.from("selected_careers").select("*").eq("user_id", S.user.id),
+    sb.from("saved_universities").select("*").eq("user_id", S.user.id),
+    sb.from("tasks").select("*").eq("user_id", S.user.id).order("created_at"),
+    sb.from("deadlines").select("*").eq("user_id", S.user.id).order("due_date"),
+  ]);
+  S.myCareers = careers.data || [];
+  S.myUniversities = unis.data || [];
+  S.myTasks = tasks.data || [];
+  S.myDeadlines = deadlines.data || [];
+}
+
 /* ============ I18N ============ */
 
 const LANG_META = {
@@ -625,6 +876,54 @@ const UI = {
     en:["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
     kz:["Дүйсенбі","Сейсенбі","Сәрсенбі","Бейсенбі","Жұма","Сенбі","Жексенбі"],
   },
+
+  loginBtn:{ru:"Войти", en:"Log in", kz:"Кіру"},
+  logoutBtn:{ru:"Выйти", en:"Log out", kz:"Шығу"},
+  tabLogin:{ru:"Вход", en:"Log in", kz:"Кіру"},
+  tabSignup:{ru:"Регистрация", en:"Sign up", kz:"Тіркелу"},
+  emailLabel:{ru:"Email", en:"Email", kz:"Email"},
+  passwordLabel:{ru:"Пароль", en:"Password", kz:"Құпия сөз"},
+  continueGoogle:{ru:"Продолжить через Google", en:"Continue with Google", kz:"Google арқылы жалғастыру"},
+  continueApple:{ru:"Продолжить через Apple", en:"Continue with Apple", kz:"Apple арқылы жалғастыру"},
+  appleSoon:{ru:"Apple вход (нужна настройка)", en:"Apple sign-in (setup required)", kz:"Apple арқылы кіру (баптау қажет)"},
+  orEmail:{ru:"или по email", en:"or with email", kz:"немесе email арқылы"},
+  loginSubmit:{ru:"Войти →", en:"Log in →", kz:"Кіру →"},
+  signupSubmit:{ru:"Создать аккаунт →", en:"Create account →", kz:"Аккаунт құру →"},
+  forgotLink:{ru:"Забыли пароль?", en:"Forgot password?", kz:"Құпия сөзді ұмыттыңыз ба?"},
+  forgotTitle:{ru:"Восстановление пароля", en:"Reset password", kz:"Құпия сөзді қалпына келтіру"},
+  forgotSubmit:{ru:"Отправить ссылку →", en:"Send reset link →", kz:"Сілтеме жіберу →"},
+  forgotSent:{ru:"Письмо со ссылкой для сброса пароля отправлено на почту.", en:"A password reset link has been sent to your email.", kz:"Құпия сөзді қалпына келтіру сілтемесі поштаңызға жіберілді."},
+  backToLogin:{ru:"← Назад ко входу", en:"← Back to log in", kz:"← Кіруге оралу"},
+  noAccountYet:{ru:"Нет аккаунта?", en:"No account yet?", kz:"Аккаунтыңыз жоқ па?"},
+  haveAccount:{ru:"Уже есть аккаунт?", en:"Already have an account?", kz:"Аккаунтыңыз бар ма?"},
+  demoNoticeTitle:{ru:"Supabase не подключён", en:"Supabase is not connected", kz:"Supabase қосылмаған"},
+  demoNoticeText:{ru:"Чтобы включить регистрацию и личный кабинет, владелец сайта должен подключить Supabase (см. README проекта). Пока можно пройти тест без сохранения результатов.", en:"To enable sign-up and the personal dashboard, the site owner needs to connect Supabase (see the project README). For now you can take the test without saving results.", kz:"Тіркелу мен жеке кабинетті қосу үшін сайт иесі Supabase-ті қосуы керек (жобаның README файлын қараңыз). Әзірге тестті нәтижесін сақтамай өтуге болады."},
+
+  psTitle:{ru:"Расскажи немного о себе", en:"Tell us a bit about yourself", kz:"Өзің туралы аздап айтшы"},
+  psHint:{ru:"Это сохранится в твоём профиле — вводить заново не придётся.", en:"This will be saved to your profile — you won't need to enter it again.", kz:"Бұл профиліңе сақталады — қайта енгізудің қажеті болмайды."},
+  nameLabel:{ru:"Имя", en:"Name", kz:"Аты"},
+  cityLabel:{ru:"Город", en:"City", kz:"Қала"},
+  gradeLabel:{ru:"Класс", en:"Grade", kz:"Сынып"},
+  schoolLabel:{ru:"Школа", en:"School", kz:"Мектеп"},
+  budgetLabel:{ru:"Бюджет на обучение", en:"Study budget", kz:"Оқуға бюджет"},
+  studyLangLabel:{ru:"Язык обучения", en:"Language of instruction", kz:"Оқу тілі"},
+  psSave:{ru:"Сохранить и продолжить →", en:"Save and continue →", kz:"Сақтап, жалғастыру →"},
+
+  dashHome:{ru:"Главная", en:"Home", kz:"Басты бет"},
+  dashProfile:{ru:"Мой профиль", en:"My profile", kz:"Менің профилім"},
+  dashProfession:{ru:"Моя профессия", en:"My profession", kz:"Менің мамандығым"},
+  dashUniversities:{ru:"Мои университеты", en:"My universities", kz:"Менің ЖОО-ларым"},
+  dashResults:{ru:"Мои результаты", en:"My results", kz:"Менің нәтижелерім"},
+  dashPlan:{ru:"Мой план", en:"My plan", kz:"Менің жоспарым"},
+  dashDeadlines:{ru:"Дедлайны", en:"Deadlines", kz:"Дедлайндар"},
+  dashSettings:{ru:"Настройки", en:"Settings", kz:"Баптаулар"},
+  helloName:{ru:"Привет, {name} 👋", en:"Hi, {name} 👋", kz:"Сәлем, {name} 👋"},
+  yourPath:{ru:"Твой путь", en:"Your path", kz:"Сенің жолың"},
+  pgOrientation:{ru:"Профориентация", en:"Career orientation", kz:"Кәсіптік бағдар"},
+  pgProfession:{ru:"Выбор профессии", en:"Choosing a profession", kz:"Мамандық таңдау"},
+  pgUniversity:{ru:"Выбор университета", en:"Choosing a university", kz:"Университет таңдау"},
+  pgPrep:{ru:"Подготовка", en:"Preparation", kz:"Дайындық"},
+  pgAdmission:{ru:"Поступление", en:"Admission", kz:"Түсу"},
 };
 
 function t(key, vars){
@@ -1366,7 +1665,7 @@ const S = {
   step:"welcome",
   lang:"ru",
   age:"", home:"KZ", target:"KZ",
-  scoreEnt:"", scoreIelts:"", scoreSat:"",
+  scoreEnt:"", scoreIelts:"", scoreSat:"", scoreToefl:"",
   klimovIdx:0, klimov:[],
   riasec:{},
   tags:[],
@@ -1375,6 +1674,20 @@ const S = {
   chosen:null,
   loadingMsgIdx:0,
   trialFor:null, trialQuestions:[], trialQIdx:0, trialAnswers:[], trialFeedback:null,
+
+  /* ---- аккаунт ---- */
+  user:null,            // объект пользователя Supabase (или null, если гость)
+  profile:null,         // строка из таблицы profiles
+  authMode:"login",     // 'login' | 'signup' | 'forgot'
+  authError:"",
+  authBusy:false,
+  dashTab:"home",
+  myCareers:[],          // selected_careers пользователя
+  myUniversities:[],     // saved_universities пользователя
+  myTests:{klimov:[], riasec:[]},
+  myTasks:[],
+  myDeadlines:[],
+  deadlineDraft:{title:"", date:""},
 };
 
 const PATH_STEPS = [
@@ -1399,6 +1712,9 @@ function render(){
   if(S.step==="trial") return renderTrial();
   if(S.step==="universities") return renderUniversities();
   if(S.step==="prepPlan") return renderPrepPlan();
+  if(S.step==="auth") return renderAuth();
+  if(S.step==="profileSetup") return renderProfileSetup();
+  if(S.step==="dashboard") return renderDashboard();
 }
 
 function progressHTML(){
@@ -1675,6 +1991,18 @@ function computeResults(){
   scored.forEach(s=>{ s.match = Math.round(Math.min(97, 55 + (s.score/maxScore)*42)); });
   scored.sort((a,b)=>b.score-a.score);
   S.results = scored.slice(0,6);
+
+  if(S.user){
+    dbSaveKlimovResult(top1, klimovCount);
+    dbSaveRiasecResult(riasecAvg);
+    dbSaveExamScores();
+    dbSaveCareerAnalysis({
+      top_klimov_type: top1,
+      top_riasec_letters: Object.keys(riasecAvg).sort((a,b)=>riasecAvg[b]-riasecAvg[a]).slice(0,3),
+      suggested_fields: [...new Set(S.results.slice(0,3).map(r=>r.field))],
+      suggested_professions: S.results.slice(0,3).map(r=>r.id),
+    });
+  }
 }
 
 /* ---- results ---- */
@@ -1683,6 +2011,11 @@ function renderResults(){
     ${progressHTML()}
     <h2 class="step-title" style="margin-bottom:4px;">Похоже, тебе подойдёт одно из этого</h2>
     <p class="step-hint">Подборка на основе теста Климова, RIASEC и твоих интересов. Попробуй профессию на практике или сразу переходи к вузам.</p>
+    ${(!S.user && SUPABASE_READY) ? `
+      <div class="info-banner" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <span>💾 Создай аккаунт, чтобы результаты сохранились и не потерялись.</span>
+        <button class="btn btn-ghost" style="flex-shrink:0;" onclick="goStep('auth')">Создать аккаунт</button>
+      </div>` : ""}
     <div>
       ${S.results.map(r=>`
         <div class="result-card">
@@ -1707,6 +2040,7 @@ function renderResults(){
 }
 function chooseProfession(id){
   S.chosen = PROFESSIONS.find(p=>p.id===id);
+  if(S.user) dbUpsertSelectedCareer(id, true);
   goStep("universities");
 }
 
@@ -1799,6 +2133,13 @@ function renderTrial(){
 }
 
 /* ---- universities ---- */
+async function saveUniversity(key, name, makePrimary){
+  if(!S.user) return;
+  const existing = S.myUniversities.find(x=>x.university_key===key);
+  await dbUpsertSavedUniversity(key, name, S.chosen.field, S.target, makePrimary || (existing && existing.is_primary));
+  await dbLoadDashboardData();
+  renderUniversities();
+}
 function reqChip(label, req, userVal){
   if(req===undefined) return "";
   if(!userVal) return `<span class="req-chip req-na">${label}: минимум ~${req}</span>`;
@@ -1814,6 +2155,8 @@ function renderUniversities(){
   const others = unis.filter(u=>u.c!==S.target);
 
   function uniCard(u){
+    const key = u.name.replace(/[^a-zA-Zа-яА-Я0-9]/g,"").slice(0,60) + "_" + u.c;
+    const saved = S.myUniversities.find(x=>x.university_key===key);
     return `
       <div class="uni-card">
         <div class="uni-top">
@@ -1829,6 +2172,11 @@ function renderUniversities(){
         </div>
         ${u.price ? `<div class="uni-price">💰 ${u.price}</div>` : ""}
         ${u.url ? `<a class="uni-link" href="${u.url}" target="_blank" rel="noopener noreferrer">Официальный сайт ↗</a>` : ""}
+        ${S.user ? `
+          <div class="btn-row" style="margin-top:12px;">
+            <button class="btn btn-ghost" style="padding:8px 14px; font-size:13px;" onclick="saveUniversity('${key}', ${JSON.stringify(u.name)}, false)">${saved ? "✓ В списке" : "+ В мои университеты"}</button>
+            <button class="btn btn-ghost" style="padding:8px 14px; font-size:13px;" onclick="saveUniversity('${key}', ${JSON.stringify(u.name)}, true)">${saved && saved.is_primary ? "★ Основной" : "Сделать основным"}</button>
+          </div>` : ""}
       </div>`;
   }
 
@@ -1919,6 +2267,452 @@ function renderPrepPlan(){
   `;
 }
 
+/* ============ ЭКРАНЫ АККАУНТА ============ */
+
+function renderAuth(){
+  if(!SUPABASE_READY){
+    app.innerHTML = `
+      <div class="auth-wrap">
+        <div class="card">
+          <h2 class="step-title">${t("demoNoticeTitle")}</h2>
+          <p class="step-hint">${t("demoNoticeText")}</p>
+          <div class="btn-row"><button class="btn btn-ghost" onclick="goStep('welcome')">← На главную</button></div>
+        </div>
+      </div>`;
+    return;
+  }
+  const mode = S.authMode;
+  app.innerHTML = `
+    <div class="auth-wrap">
+      <div class="auth-tabs">
+        <button class="auth-tab ${mode==='login'?'active':''}" onclick="switchAuthMode('login')">${t("tabLogin")}</button>
+        <button class="auth-tab ${mode==='signup'?'active':''}" onclick="switchAuthMode('signup')">${t("tabSignup")}</button>
+      </div>
+      <div class="card">
+        ${mode==="forgot" ? `
+          <h2 class="step-title">${t("forgotTitle")}</h2>
+          ${S.authError==="__sent__" ? `<div class="info-banner">${t("forgotSent")}</div>` : ""}
+          ${S.authError && S.authError!=="__sent__" ? `<div class="auth-error">${S.authError}</div>` : ""}
+          <div class="field"><label>${t("emailLabel")}</label><input type="email" id="f-email" placeholder="you@example.com"></div>
+          <button class="btn btn-primary btn-block" ${S.authBusy?'disabled':''} onclick="handleForgot()">${t("forgotSubmit")}</button>
+          <div class="auth-link-row"><button onclick="switchAuthMode('login')">${t("backToLogin")}</button></div>
+        ` : `
+          <button class="oauth-btn" onclick="signInWithGoogle()">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.6 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.1 29.6 4 24 4c-7.7 0-14.4 4.3-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-2.1 14-5.5l-6.5-5.5C29.4 35 26.8 36 24 36c-5.3 0-9.8-3.4-11.3-8.1l-6.6 5.1C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3-3.3 5.4-6.2 6.9l6.5 5.5C38.9 38 44 32 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
+            ${t("continueGoogle")}
+          </button>
+          <button class="oauth-btn" disabled title="${t('appleSoon')}">
+             Apple — ${t("appleSoon")}
+          </button>
+          <div class="auth-divider">${t("orEmail")}</div>
+          ${S.authError ? `<div class="auth-error">${S.authError}</div>` : ""}
+          <div class="field"><label>${t("emailLabel")}</label><input type="email" id="f-email" placeholder="you@example.com"></div>
+          <div class="field"><label>${t("passwordLabel")}</label><input type="password" id="f-password" placeholder="••••••••"></div>
+          ${mode==="login" ? `
+            <button class="btn btn-primary btn-block" ${S.authBusy?'disabled':''} onclick="handleLogin()">${t("loginSubmit")}</button>
+            <div class="auth-link-row"><button onclick="switchAuthMode('forgot')">${t("forgotLink")}</button></div>
+            <div class="auth-link-row">${t("noAccountYet")} <button onclick="switchAuthMode('signup')">${t("tabSignup")}</button></div>
+          ` : `
+            <button class="btn btn-primary btn-block" ${S.authBusy?'disabled':''} onclick="handleSignup()">${t("signupSubmit")}</button>
+            <div class="auth-link-row">${t("haveAccount")} <button onclick="switchAuthMode('login')">${t("tabLogin")}</button></div>
+          `}
+        `}
+      </div>
+    </div>
+  `;
+}
+function switchAuthMode(mode){ S.authMode=mode; S.authError=""; renderAuth(); }
+function handleLogin(){
+  const email = document.getElementById("f-email").value.trim();
+  const password = document.getElementById("f-password").value;
+  if(!email || !password){ S.authError="Заполни email и пароль"; renderAuth(); return; }
+  signIn(email, password);
+}
+function handleSignup(){
+  const email = document.getElementById("f-email").value.trim();
+  const password = document.getElementById("f-password").value;
+  if(!email || password.length<6){ S.authError="Пароль должен быть не короче 6 символов"; renderAuth(); return; }
+  signUp(email, password);
+}
+function handleForgot(){
+  const email = document.getElementById("f-email").value.trim();
+  if(!email){ S.authError="Введи email"; renderAuth(); return; }
+  sendPasswordReset(email);
+}
+
+/* ---- анкета первого входа ---- */
+function renderProfileSetup(){
+  const p = S.profile || {};
+  app.innerHTML = `
+    <div class="card">
+      <h2 class="step-title">${t("psTitle")}</h2>
+      <p class="step-hint">${t("psHint")}</p>
+      <div class="grid-2">
+        <div class="field"><label>${t("nameLabel")}</label><input id="ps-name" value="${p.full_name||''}"></div>
+        <div class="field"><label>${t("ageLabel")}</label><input type="number" id="ps-age" min="12" max="19" value="${p.age||''}"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>${t("homeLabel")}</label><select id="ps-home">${countryOptions(p.home_country||S.home)}</select></div>
+        <div class="field"><label>${t("cityLabel")}</label><input id="ps-city" value="${p.city||''}"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>${t("gradeLabel")}</label><input id="ps-grade" placeholder="11" value="${p.grade||''}"></div>
+        <div class="field"><label>${t("schoolLabel")}</label><input id="ps-school" value="${p.school||''}"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>${t("targetLabel")}</label><select id="ps-target">${countryOptions(p.target_country||S.target)}</select></div>
+        <div class="field"><label>${t("studyLangLabel")}</label><input id="ps-studylang" placeholder="Английский / Русский / ..." value="${p.study_language||''}"></div>
+      </div>
+      <div class="field"><label>${t("budgetLabel")} <span class="opt">(необязательно)</span></label><input id="ps-budget" placeholder="например, до 1 500 000 ₸/год" value="${p.budget||''}"></div>
+      <div class="btn-row"><button class="btn btn-primary btn-block" onclick="saveProfileSetup()">${t("psSave")}</button></div>
+    </div>
+  `;
+}
+async function saveProfileSetup(){
+  const payload = {
+    id: S.user.id,
+    full_name: document.getElementById("ps-name").value.trim(),
+    age: document.getElementById("ps-age").value || null,
+    home_country: document.getElementById("ps-home").value,
+    city: document.getElementById("ps-city").value.trim(),
+    grade: document.getElementById("ps-grade").value.trim(),
+    school: document.getElementById("ps-school").value.trim(),
+    target_country: document.getElementById("ps-target").value,
+    study_language: document.getElementById("ps-studylang").value.trim(),
+    budget: document.getElementById("ps-budget").value.trim(),
+    updated_at: new Date().toISOString(),
+  };
+  await sb.from("profiles").upsert(payload);
+  S.profile = payload;
+  renderAccountSwitch();
+  await dbLoadDashboardData();
+  goStep("dashboard");
+}
+
+/* ---- личный кабинет ---- */
+function computeProgress(){
+  const hasTests = S.myTests.klimov.length>0 || S.results.length>0;
+  const hasProfession = S.myCareers.length>0;
+  const hasUniversity = S.myUniversities.length>0;
+  const hasScores = !!(S.scoreEnt||S.scoreIelts||S.scoreSat||S.scoreToefl);
+  const doneTasks = S.myTasks.filter(x=>x.status==="done").length;
+  const prepPct = S.myTasks.length ? Math.round(doneTasks/S.myTasks.length*100) : 0;
+  return [
+    [t("pgOrientation"), hasTests?100:0],
+    [t("pgProfession"), hasProfession?100:0],
+    [t("pgUniversity"), hasUniversity?100:0],
+    [t("stepAnalysis")==="Анализ"?"Экзамены":"Exams", hasScores?100:0],
+    [t("pgPrep"), prepPct],
+    [t("pgAdmission"), 0],
+  ];
+}
+function dashNavHtml(){
+  const items = [
+    ["home", t("dashHome")], ["profile", t("dashProfile")], ["profession", t("dashProfession")],
+    ["universities", t("dashUniversities")], ["results", t("dashResults")], ["plan", t("dashPlan")],
+    ["deadlines", t("dashDeadlines")], ["settings", t("dashSettings")],
+  ];
+  return `<div class="dash-nav">${items.map(i=>`<button class="${S.dashTab===i[0]?'active':''}" onclick="setDashTab('${i[0]}')">${i[1]}</button>`).join("")}</div>`;
+}
+async function setDashTab(tab){ S.dashTab=tab; await dbLoadDashboardData(); renderDashboard(); }
+
+async function renderDashboard(){
+  if(!S.user){ goStep("auth"); return; }
+  if(!S.profile){ goStep("profileSetup"); return; }
+  if(!S.myCareers.length && !S.myUniversities.length && !S.myTasks.length) await dbLoadDashboardData();
+
+  let body = "";
+  if(S.dashTab==="home") body = dashHomeView();
+  else if(S.dashTab==="profile") body = dashProfileView();
+  else if(S.dashTab==="profession") body = dashProfessionView();
+  else if(S.dashTab==="universities") body = dashUniversitiesView();
+  else if(S.dashTab==="results") body = dashResultsView();
+  else if(S.dashTab==="plan") body = dashPlanView();
+  else if(S.dashTab==="deadlines") body = dashDeadlinesView();
+  else if(S.dashTab==="settings") body = dashSettingsView();
+
+  app.innerHTML = `<div class="dash-wrap">${dashNavHtml()}<div class="dash-main">${body}</div></div>`;
+}
+
+function dashHomeView(){
+  const progress = computeProgress();
+  const primaryCareerRow = S.myCareers.find(c=>c.is_primary) || S.myCareers[0];
+  const primaryCareer = primaryCareerRow ? PROFESSIONS.find(p=>p.id===primaryCareerRow.profession_id) : null;
+  const primaryUni = S.myUniversities.find(u=>u.is_primary) || S.myUniversities[0];
+  return `
+    <h2 class="dash-hello">${t("helloName",{name:S.profile.full_name||"там"})}</h2>
+    <div class="step-hint">${t("yourPath")}</div>
+    ${progress.map(([label,pct])=>`
+      <div class="progress-row">
+        <div class="progress-row-label">${label}</div>
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div class="progress-pct">${pct}%</div>
+      </div>
+    `).join("")}
+
+    <div class="dash-grid">
+      <div class="dash-card">
+        <div class="dash-card-label">${t("dashProfession")}</div>
+        ${primaryCareer ? `<div class="dash-card-title">${primaryCareer.name}</div><button class="btn btn-ghost" onclick="setDashTab('profession')">Подробнее</button>`
+          : `<div class="dash-empty">Пока не выбрана.</div><button class="btn btn-ghost" onclick="goStep('welcome')">Пройти тест</button>`}
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">${t("dashUniversities")}</div>
+        ${primaryUni ? `<div class="dash-card-title">${primaryUni.university_name}</div><button class="btn btn-ghost" onclick="setDashTab('universities')">Открыть</button>`
+          : `<div class="dash-empty">Пока не выбран.</div>`}
+      </div>
+    </div>
+
+    <div class="dash-card" style="margin-top:14px;">
+      <div class="dash-card-label">Текущая цель</div>
+      ${S.scoreEnt ? `
+        <div class="dash-card-title">ЕНТ: текущий результат ${S.scoreEnt}</div>
+        <div class="mini-stat">Введи цель на странице «Мои результаты», чтобы увидеть разницу в баллах.</div>
+      ` : `<div class="dash-empty">Баллы ещё не указаны.</div>`}
+      <div class="btn-row"><button class="btn btn-ghost" onclick="setDashTab('plan')">${t("dashPlan")} →</button></div>
+    </div>
+  `;
+}
+
+function dashProfileView(){
+  const p = S.profile;
+  return `
+    <div class="profile-head">
+      <div class="avatar-circle-lg">${(p.full_name||"?")[0].toUpperCase()}</div>
+      <div>
+        <div class="dash-card-title" style="margin-bottom:2px;">${p.full_name||"—"}</div>
+        <div class="mini-stat">${S.user.email}</div>
+      </div>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card"><div class="dash-card-label">${t("ageLabel")}</div>${p.age||"—"}</div>
+      <div class="dash-card"><div class="dash-card-label">${t("gradeLabel")}</div>${p.grade||"—"}</div>
+      <div class="dash-card"><div class="dash-card-label">${t("homeLabel")}</div>${COUNTRY[p.home_country]?COUNTRY[p.home_country].n:(p.home_country||"—")}</div>
+      <div class="dash-card"><div class="dash-card-label">${t("cityLabel")}</div>${p.city||"—"}</div>
+      <div class="dash-card"><div class="dash-card-label">${t("schoolLabel")}</div>${p.school||"—"}</div>
+      <div class="dash-card"><div class="dash-card-label">${t("targetLabel")}</div>${COUNTRY[p.target_country]?COUNTRY[p.target_country].n:(p.target_country||"—")}</div>
+    </div>
+    <div class="btn-row"><button class="btn btn-ghost" onclick="setDashTab('settings')">Изменить данные</button></div>
+  `;
+}
+
+function dashProfessionView(){
+  const row = S.myCareers.find(c=>c.is_primary) || S.myCareers[0];
+  if(!row) return `<div class="card"><div class="dash-empty">Профессия ещё не выбрана.</div><div class="btn-row"><button class="btn btn-primary" onclick="goStep('welcome')">Пройти тест</button></div></div>`;
+  const prof = PROFESSIONS.find(p=>p.id===row.profession_id);
+  return `
+    <div class="card">
+      <div class="dash-card-label">${t("dashProfession")}</div>
+      <h2 class="step-title">${prof.name}</h2>
+      <p class="step-hint">${prof.desc}</p>
+      <div class="result-tags">${prof.tags.map(tg=>`<span class="mini-tag">${TAGS.find(x=>x.k===tg).l}</span>`).join("")}</div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="startTrial('${prof.id}')">🎯 Попробовать профессию</button>
+        <button class="btn btn-ghost" onclick="chooseProfession('${prof.id}')">Открыть университеты</button>
+      </div>
+    </div>
+    ${S.myCareers.length>1 ? `
+      <div class="uni-group-title">Другие сохранённые профессии</div>
+      ${S.myCareers.filter(c=>c.profession_id!==row.profession_id).map(c=>{
+        const pr = PROFESSIONS.find(p=>p.id===c.profession_id);
+        return `<div class="uni-card"><div class="uni-name">${pr.name}</div><button class="btn btn-ghost" style="margin-top:8px;" onclick="dbUpsertSelectedCareer('${pr.id}', true).then(()=>setDashTab('profession'))">Сделать основной</button></div>`;
+      }).join("")}
+    ` : ""}
+  `;
+}
+
+function dashUniversitiesView(){
+  if(!S.myUniversities.length) return `<div class="card"><div class="dash-empty">Вузы ещё не сохранены — добавь их со страницы университетов.</div></div>`;
+  return S.myUniversities.map(u=>`
+    <div class="uni-card">
+      <div class="uni-top">
+        <div>
+          <div class="uni-name">${u.is_primary?"★ ":""}${u.university_name}</div>
+          <div class="uni-country">${COUNTRY[u.country]?COUNTRY[u.country].n:(u.country||"")} · ${u.field}</div>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:10px;">
+        ${!u.is_primary ? `<button class="btn btn-ghost" style="padding:8px 14px;font-size:13px;" onclick="dbUpsertSavedUniversity('${u.university_key}','${u.university_name.replace(/'/g,"\\'")}','${u.field}','${u.country}',true).then(()=>setDashTab('universities'))">Сделать основным</button>` : ""}
+        <button class="btn btn-ghost" style="padding:8px 14px;font-size:13px;" onclick="removeSavedUniversity('${u.id}')">Удалить</button>
+      </div>
+    </div>
+  `).join("");
+}
+async function removeSavedUniversity(id){
+  await sb.from("saved_universities").delete().eq("id", id);
+  await dbLoadDashboardData();
+  renderDashboard();
+}
+
+function dashResultsView(){
+  return `
+    <div class="card">
+      <h2 class="step-title">${t("dashResults")}</h2>
+      <p class="step-hint">Твои текущие баллы (можно обновить в любой момент).</p>
+      <div class="grid-3">
+        <div class="field"><label>${t("entLabel")}</label><input type="number" id="dr-ent" value="${S.scoreEnt}"></div>
+        <div class="field"><label>${t("ieltsLabel")}</label><input type="number" step="0.5" id="dr-ielts" value="${S.scoreIelts}"></div>
+        <div class="field"><label>${t("satLabel")}</label><input type="number" id="dr-sat" value="${S.scoreSat}"></div>
+      </div>
+      <div class="field"><label>TOEFL</label><input type="number" id="dr-toefl" value="${S.scoreToefl}"></div>
+      <button class="btn btn-primary" onclick="updateMyScores()">Сохранить баллы</button>
+    </div>
+    <div class="uni-group-title">История тестов</div>
+    <div class="dash-card">
+      ${S.results.length ? `<div class="mini-stat">Последний подбор профессий был только что, на этом устройстве. Историю прошлых прохождений Supabase хранит в таблицах <b>klimov_results</b> и <b>riasec_results</b>.</div>` : `<div class="dash-empty">Пройди тест, чтобы увидеть историю здесь.</div>`}
+    </div>
+  `;
+}
+async function updateMyScores(){
+  S.scoreEnt = document.getElementById("dr-ent").value;
+  S.scoreIelts = document.getElementById("dr-ielts").value;
+  S.scoreSat = document.getElementById("dr-sat").value;
+  S.scoreToefl = document.getElementById("dr-toefl").value;
+  await dbSaveExamScores();
+  renderDashboard();
+}
+
+function dashPlanView(){
+  return `
+    <div class="card">
+      <h2 class="step-title">${t("dashPlan")}</h2>
+      <p class="step-hint">Отмечай задачи по мере выполнения — прогресс учитывается на главной.</p>
+      <div class="field"><input id="task-new" placeholder="Новая задача, например «Решить 10 задач по математике»"></div>
+      <button class="btn btn-ghost" onclick="addTask()">+ Добавить задачу</button>
+    </div>
+    ${S.myTasks.length ? S.myTasks.map(tk=>`
+      <div class="checklist-item ${tk.status==='done'?'done':''}">
+        <button class="checklist-check ${tk.status==='done'?'on':''}" onclick="toggleTask('${tk.id}','${tk.status==='done'?'not_started':'done'}')">${tk.status==='done'?'✓':''}</button>
+        <div class="checklist-text">${tk.title}</div>
+        <button class="deadline-del" onclick="deleteTask('${tk.id}')">✕</button>
+      </div>
+    `).join("") : `<div class="dash-empty">Задач пока нет.</div>`}
+  `;
+}
+async function addTask(){
+  const title = document.getElementById("task-new").value.trim();
+  if(!title) return;
+  await sb.from("tasks").insert({ user_id:S.user.id, title, status:"not_started" });
+  await dbLoadDashboardData();
+  renderDashboard();
+}
+async function toggleTask(id, newStatus){
+  await sb.from("tasks").update({ status:newStatus }).eq("id", id);
+  await dbLoadDashboardData();
+  renderDashboard();
+}
+async function deleteTask(id){
+  await sb.from("tasks").delete().eq("id", id);
+  await dbLoadDashboardData();
+  renderDashboard();
+}
+
+function dashDeadlinesView(){
+  const now = Date.now();
+  return `
+    <div class="card">
+      <h2 class="step-title">${t("dashDeadlines")}</h2>
+      <p class="step-hint">Дедлайны добавляются вручную — сверяй даты с официальным сайтом университета или организатора экзамена.</p>
+      <div class="grid-2">
+        <div class="field"><label>Название</label><input id="dl-title" placeholder="Подача документов в AITU"></div>
+        <div class="field"><label>Дата</label><input type="date" id="dl-date"></div>
+      </div>
+      <button class="btn btn-ghost" onclick="addDeadline()">+ Добавить дедлайн</button>
+    </div>
+    ${S.myDeadlines.length ? S.myDeadlines.map(d=>{
+      const daysLeft = Math.ceil((new Date(d.due_date).getTime()-now)/86400000);
+      const soon = daysLeft>=0 && daysLeft<=7;
+      return `
+        <div class="deadline-item ${soon?'deadline-soon':''}">
+          <div>
+            <b>${d.title}</b>
+            <div class="mini-stat">📅 ${d.due_date} ${soon ? `· ⚠️ через ${daysLeft} дн.` : ""}</div>
+          </div>
+          <button class="deadline-del" onclick="deleteDeadline('${d.id}')">Удалить</button>
+        </div>`;
+    }).join("") : `<div class="dash-empty">Дедлайнов пока нет.</div>`}
+  `;
+}
+async function addDeadline(){
+  const title = document.getElementById("dl-title").value.trim();
+  const date = document.getElementById("dl-date").value;
+  if(!title || !date) return;
+  await sb.from("deadlines").insert({ user_id:S.user.id, title, due_date:date });
+  await dbLoadDashboardData();
+  renderDashboard();
+}
+async function deleteDeadline(id){
+  await sb.from("deadlines").delete().eq("id", id);
+  await dbLoadDashboardData();
+  renderDashboard();
+}
+
+function dashSettingsView(){
+  const p = S.profile;
+  return `
+    <div class="card">
+      <h2 class="step-title">${t("dashSettings")}</h2>
+      <div class="grid-2">
+        <div class="field"><label>${t("nameLabel")}</label><input id="set-name" value="${p.full_name||''}"></div>
+        <div class="field"><label>${t("ageLabel")}</label><input type="number" id="set-age" value="${p.age||''}"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>${t("homeLabel")}</label><select id="set-home">${countryOptions(p.home_country)}</select></div>
+        <div class="field"><label>${t("cityLabel")}</label><input id="set-city" value="${p.city||''}"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>${t("gradeLabel")}</label><input id="set-grade" value="${p.grade||''}"></div>
+        <div class="field"><label>${t("targetLabel")}</label><select id="set-target">${countryOptions(p.target_country)}</select></div>
+      </div>
+      <button class="btn btn-primary" onclick="saveSettingsProfile()">Сохранить изменения</button>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="dash-card-label">Пароль</div>
+      <div class="field"><label>Новый пароль</label><input type="password" id="set-newpass" placeholder="минимум 6 символов"></div>
+      <button class="btn btn-ghost" onclick="changePassword()">Изменить пароль</button>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <button class="btn btn-ghost btn-block" onclick="signOut()">${t("logoutBtn")}</button>
+    </div>
+
+    <div class="card" style="margin-top:14px; border-color:var(--rose);">
+      <div class="dash-card-label" style="color:var(--rose);">Опасная зона</div>
+      <p class="mini-stat">Эта кнопка обезличивает данные профиля и выходит из аккаунта. Полное удаление строки пользователя из системы авторизации требует серверной функции (Edge Function с service_role ключом) — её нужно настроить отдельно в Supabase, это не может быть сделано напрямую с фронтенда по соображениям безопасности.</p>
+      <button class="btn btn-ghost" style="color:var(--rose); border-color:var(--rose);" onclick="anonymizeAndSignOut()">Обезличить данные и выйти</button>
+    </div>
+  `;
+}
+async function saveSettingsProfile(){
+  const payload = {
+    id: S.user.id,
+    full_name: document.getElementById("set-name").value.trim(),
+    age: document.getElementById("set-age").value || null,
+    home_country: document.getElementById("set-home").value,
+    city: document.getElementById("set-city").value.trim(),
+    grade: document.getElementById("set-grade").value.trim(),
+    target_country: document.getElementById("set-target").value,
+    updated_at: new Date().toISOString(),
+  };
+  await sb.from("profiles").upsert(payload);
+  S.profile = {...S.profile, ...payload};
+  renderAccountSwitch();
+  renderDashboard();
+}
+async function changePassword(){
+  const pass = document.getElementById("set-newpass").value;
+  if(pass.length<6) return;
+  await sb.auth.updateUser({ password:pass });
+  document.getElementById("set-newpass").value="";
+  alert("Пароль обновлён");
+}
+async function anonymizeAndSignOut(){
+  if(!confirm("Обезличить данные профиля и выйти из аккаунта? Это действие необратимо.")) return;
+  await sb.from("profiles").update({ full_name:"Удалённый пользователь", city:null, school:null, budget:null }).eq("id", S.user.id);
+  await signOut();
+}
+
 function restart(){
   S.step="welcome"; S.age=""; S.home="KZ"; S.target="KZ";
   S.scoreEnt=""; S.scoreIelts=""; S.scoreSat="";
@@ -1932,6 +2726,7 @@ function restart(){
 function goStep(step){ S.step=step; render(); }
 
 renderLangSwitch();
+initAuth();
 render();
 </script>
 </body>
